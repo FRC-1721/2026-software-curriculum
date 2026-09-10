@@ -1,0 +1,260 @@
+<title>Week 1 Slides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#14161A; --panel:#1C2026; --panel-2:#232830; --line:#333A44;
+    --ink:#EEEBE4; --muted:#A2A8B2; --faint:#767D88;
+    --amber:#F2762E; --amber-soft:#3A2413; --teal:#3DC7BE; --teal-soft:#12312F;
+    --code-bg:#0E1013; --code-ink:#EEEBE4;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif; overflow:hidden}
+  .deck{height:100vh; width:100%; position:relative}
+
+  .slide{position:absolute; inset:0; display:none; flex-direction:column; justify-content:center;
+    padding:6vh 8vw; opacity:0; transition:opacity .25s ease}
+  .slide.active{display:flex; opacity:1}
+  @media (prefers-reduced-motion:reduce){.slide{transition:none}}
+
+  h1,h2,h3{font-family:"Archivo",sans-serif; margin:0; text-wrap:balance; letter-spacing:-.02em; line-height:1.03}
+  .mono{font-family:"IBM Plex Mono",monospace}
+  .kicker{font-family:"IBM Plex Mono",monospace; font-size:clamp(12px,1.4vw,15px); letter-spacing:.2em; text-transform:uppercase; color:var(--amber); font-weight:600; margin-bottom:22px}
+  .big{font-size:clamp(34px,6.5vw,76px); font-weight:900}
+  .h2{font-size:clamp(26px,4.4vw,50px); font-weight:800}
+  .sub{font-size:clamp(16px,2.2vw,25px); color:var(--muted); margin-top:22px; max-width:24ch; line-height:1.45}
+  .sub.wide{max-width:34ch}
+  .sub b{color:var(--ink); font-weight:600}
+  .accent{color:var(--amber)}
+  .teal{color:var(--teal)}
+
+  ul.pts{list-style:none; padding:0; margin:30px 0 0; display:flex; flex-direction:column; gap:16px}
+  ul.pts li{font-size:clamp(17px,2.4vw,27px); display:flex; gap:16px; align-items:flex-start; line-height:1.35; max-width:30ch}
+  ul.pts li .m{font-family:"IBM Plex Mono",monospace; color:var(--amber); font-weight:600; flex:none}
+  ul.pts li b{font-weight:600}
+  ul.pts li span.d{color:var(--muted); font-weight:400}
+
+  pre{background:var(--code-bg); color:var(--code-ink); border:1px solid rgba(255,255,255,.08); border-radius:12px;
+    padding:22px 26px; font-family:"IBM Plex Mono",monospace; font-size:clamp(14px,1.9vw,22px); line-height:1.6;
+    margin:30px 0 0; overflow-x:auto; max-width:900px}
+  pre .c{color:#767D88} pre .k{color:var(--amber)} pre .s{color:var(--teal)}
+
+  /* diagram */
+  .diagram{display:flex; align-items:center; gap:clamp(14px,3vw,44px); margin-top:34px; flex-wrap:wrap}
+  .node{border:2px solid var(--line); background:var(--panel); border-radius:14px; padding:clamp(16px,2.4vw,28px) clamp(18px,3vw,34px); min-width:min(38vw,240px)}
+  .node .t{font-family:"Archivo",sans-serif; font-weight:800; font-size:clamp(18px,2.6vw,30px)}
+  .node .d{color:var(--muted); font-size:clamp(13px,1.6vw,18px); margin-top:6px; line-height:1.35}
+  .node.robo{border-color:var(--amber); background:var(--amber-soft)}
+  .flow{display:flex; flex-direction:column; align-items:center; color:var(--teal); font-family:"IBM Plex Mono",monospace; font-size:clamp(11px,1.3vw,15px); letter-spacing:.06em}
+  .flow .a{font-size:clamp(26px,4vw,46px); line-height:1}
+
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:clamp(18px,2.6vw,30px); margin-top:26px; max-width:820px}
+  .card .lab{font-family:"IBM Plex Mono",monospace; font-size:clamp(11px,1.3vw,14px); letter-spacing:.14em; text-transform:uppercase; color:var(--amber); font-weight:600; margin-bottom:12px}
+  .card p{margin:0; font-size:clamp(16px,2.1vw,24px); color:var(--ink); line-height:1.4}
+  .card p + p{margin-top:12px}
+
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:30px; max-width:960px}
+  .two .box{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:clamp(16px,2.2vw,26px)}
+  .two .box.hot{border-color:var(--amber)}
+  .two .box .h{font-family:"Archivo",sans-serif; font-weight:800; font-size:clamp(17px,2.2vw,26px)}
+  .two .box .h .tag{font-family:"IBM Plex Mono",monospace; font-size:clamp(11px,1.3vw,15px); color:var(--amber); display:block; letter-spacing:.08em; margin-top:4px}
+  .two .box p{margin:12px 0 0; color:var(--muted); font-size:clamp(14px,1.7vw,19px); line-height:1.4}
+
+  /* chrome */
+  .chrome{position:fixed; left:0; right:0; bottom:0; display:flex; align-items:center; gap:16px; padding:14px 22px; z-index:10}
+  .dots{display:flex; gap:7px; flex:1}
+  .dot{width:8px; height:8px; border-radius:50%; background:var(--line); border:none; padding:0; cursor:pointer}
+  .dot.on{background:var(--amber); transform:scale(1.25)}
+  .nav{display:flex; align-items:center; gap:8px}
+  .nav button{font:inherit; font-family:"IBM Plex Mono",monospace; font-size:13px; color:var(--muted); background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:7px 13px; cursor:pointer}
+  .nav button:hover{color:var(--ink); border-color:var(--amber)}
+  .counter{font-family:"IBM Plex Mono",monospace; font-size:13px; color:var(--faint); min-width:52px; text-align:center}
+  .brand{position:fixed; top:20px; right:26px; font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); z-index:10}
+  .hint{position:fixed; top:20px; left:26px; font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--faint); z-index:10}
+  kbd{font-family:"IBM Plex Mono",monospace; background:var(--panel-2); border:1px solid var(--line); border-radius:4px; padding:1px 6px; font-size:11px}
+  @media (max-width:640px){.two{grid-template-columns:1fr} .hint{display:none} ul.pts li{max-width:none}}
+</style>
+
+<div class="brand">FRC · Week 01</div>
+<div class="hint">◀ ▶ or <kbd>Space</kbd> to advance</div>
+
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide active">
+    <div class="kicker">FRC Java · Week 1 of 12 · Foundations</div>
+    <h1 class="big">Environment, tooling<br>&amp; <span class="accent">“Hello, Robot”</span></h1>
+    <p class="sub wide">Today we set up your tools and prove the whole loop works. By the end of the hour, code <b>you</b> wrote will be running.</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <div class="kicker">Where we’re headed</div>
+    <h2 class="h2">12 weeks: from empty project<br>to a robot that <span class="accent">drives itself</span></h2>
+    <ul class="pts">
+      <li><span class="m">A</span><span><b>Foundations</b> <span class="d">— Java + command-based, in simulation</span></span></li>
+      <li><span class="m">B</span><span><b>Real robot</b> <span class="d">— swerve, sensors, driving last year’s bot</span></span></li>
+      <li><span class="m">C</span><span><b>Telemetry &amp; autonomy</b> <span class="d">— AdvantageScope, logging, PathPlanner</span></span></li>
+    </ul>
+    <p class="sub wide">Week 1 is the least glamorous and one of the most important: the tools.</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <div class="kicker">Today’s finish line</div>
+    <h2 class="h2">Build → Simulate →<br><span class="accent">Print</span> → <span class="teal">Commit</span></h2>
+    <div class="card">
+      <div class="lab">Your deliverable</div>
+      <p>A WPILib 2026 project that <b>builds</b>, <b>runs in the simulator</b>, prints a message <b>you</b> wrote, and is <b>committed to Git.</b></p>
+      <p style="color:var(--muted)">No physical robot needed today.</p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <div class="kicker">Where does the code live?</div>
+    <div class="diagram">
+      <div class="node"><div class="t">Your Laptop</div><div class="d">VS Code + WPILib —<br>writes &amp; builds code</div></div>
+      <div class="flow"><span>deploy</span><span class="a">→</span><span>telemetry ←</span></div>
+      <div class="node robo"><div class="t">roboRIO</div><div class="d">the robot’s brain —<br>runs your Java</div></div>
+    </div>
+    <p class="sub wide">This week the robot is replaced by a <b>simulator</b> on your laptop — so nobody needs the physical robot. (Code also flows to <b>GitHub</b> via Git.)</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <div class="kicker">The one idea to remember</div>
+    <h2 class="h2">Robot code runs on a <span class="accent">loop</span></h2>
+    <div class="two">
+      <div class="box"><div class="h">Init<span class="tag">runs ONCE</span></div><p>Runs the instant a mode starts. Put one-time setup and messages here.</p></div>
+      <div class="box hot"><div class="h">Periodic<span class="tag">~50× / second</span></div><p>Runs every ~20 ms while in that mode. This loop is the robot’s heartbeat.</p></div>
+    </div>
+    <p class="sub wide"><code class="mono">teleopInit()</code> once · <code class="mono">teleopPeriodic()</code> fifty times a second.</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <div class="kicker">The tools</div>
+    <h2 class="h2">Three things do the work</h2>
+    <ul class="pts">
+      <li><span class="m">1</span><span><b>VS Code</b> <span class="d">— the editor where you write code</span></span></li>
+      <li><span class="m">2</span><span><b>WPILib extension</b> <span class="d">— the red “W” hexagon; all FRC commands</span></span></li>
+      <li><span class="m">3</span><span><b>GradleRIO</b> <span class="d">— the build system; turns Java into robot-ready code (we don’t touch it today)</span></span></li>
+    </ul>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <div class="kicker">Project anatomy</div>
+    <h2 class="h2">What’s in the project</h2>
+    <ul class="pts">
+      <li><span class="m">◆</span><span><code class="mono">Robot.java</code> <span class="d">— where you’ll live</span></span></li>
+      <li><span class="m">◆</span><span><code class="mono">Main.java</code> <span class="d">— starts the robot; don’t touch it</span></span></li>
+      <li><span class="m">◆</span><span><code class="mono">build.gradle</code> <span class="d">— the build recipe; leave it alone this week</span></span></li>
+      <li><span class="m">◆</span><span><code class="mono">.gitignore</code> · <code class="mono">vendordeps/</code> <span class="d">— housekeeping; vendor libs come in Week 5</span></span></li>
+    </ul>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <div class="kicker">Live demo — watch, then you’ll do it</div>
+    <h2 class="h2">Create · edit · <span class="accent">simulate</span></h2>
+    <ul class="pts">
+      <li><span class="m">1</span><span>New project: <b>Template → java → Timed Robot</b></span></li>
+      <li><span class="m">2</span><span>Add one line to <code class="mono">teleopInit()</code>:</span></li>
+    </ul>
+<pre><span class="k">System</span>.out.println(<span class="s">"Hello, Robot!"</span>);</pre>
+    <ul class="pts" style="margin-top:20px">
+      <li><span class="m">3</span><span>Simulate → check <b>Sim GUI</b> → set state <b>Teleoperated</b> → it prints!</span></li>
+    </ul>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="kicker">The teachable twist</div>
+    <h2 class="h2">Move it into <code class="mono">Periodic</code>…</h2>
+<pre><span class="k">public void</span> teleopPeriodic() {
+  <span class="k">System</span>.out.println(<span class="s">"Hello, Robot!"</span>);   <span class="c">// prints 50×/sec!</span>
+}</pre>
+    <p class="sub wide">…and it <b>floods</b> the console — because <code class="mono">Periodic</code> runs 50 times a second. That’s the loop. Put one-time messages in <code class="mono">Init</code> instead.</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <div class="kicker">Your turn — 35 minutes</div>
+    <h2 class="h2">The lab, in <span class="accent">6 steps</span></h2>
+    <ul class="pts">
+      <li><span class="m">0–2</span><span>Check tools · create project · <b>build</b> (<code class="mono">BUILD SUCCESSFUL</code>)</span></li>
+      <li><span class="m">3–4</span><span>Add <b>your name</b> to the print line</span></li>
+      <li><span class="m">5</span><span>Simulate → set <b>Teleoperated</b> → see your message 🎉</span></li>
+      <li><span class="m">6</span><span><code class="mono">git init → add → commit → push</code></span></li>
+    </ul>
+    <p class="sub wide">Work in pairs. Stuck more than a minute? Raise a hand.</p>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide">
+    <div class="kicker">Finished early?</div>
+    <h2 class="h2">Stretch goals</h2>
+    <ul class="pts">
+      <li><span class="m">★</span><span>Open a <b>pull request</b> into <code class="mono">main</code></span></li>
+      <li><span class="m">★</span><span>Print a once-per-second <b>countdown</b> in <code class="mono">teleopPeriodic</code></span></li>
+      <li><span class="m">★</span><span>Explore the Sim GUI — joysticks, NetworkTables</span></li>
+      <li><span class="m">★</span><span><b>Help a neighbor</b> reach a green checkmark</span></li>
+    </ul>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide">
+    <div class="kicker">Wrap</div>
+    <h2 class="h2">Editor → build → simulate → <span class="teal">commit</span></h2>
+    <div class="card">
+      <div class="lab">Homework</div>
+      <p>1 · Get WPILib 2026 working on your <b>own</b> laptop.</p>
+      <p>2 · Read WPILib <b>“Zero to Robot,”</b> steps 1–4.</p>
+      <p>3 · Optional: change your message, push a second commit.</p>
+    </div>
+    <p class="sub wide">Next week: <span class="accent">actual Java.</span></p>
+  </section>
+
+</div>
+
+<div class="chrome">
+  <div class="dots" id="dots"></div>
+  <div class="nav">
+    <button id="prev" aria-label="Previous slide">◀ Prev</button>
+    <span class="counter" id="counter">1 / 12</span>
+    <button id="next" aria-label="Next slide">Next ▶</button>
+  </div>
+</div>
+
+<script>
+  (function(){
+    var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+    var i=0, dotsWrap=document.getElementById('dots');
+    slides.forEach(function(s,idx){
+      var d=document.createElement('button'); d.className='dot'+(idx===0?' on':'');
+      d.setAttribute('aria-label','Go to slide '+(idx+1));
+      d.addEventListener('click',function(){go(idx);});
+      dotsWrap.appendChild(d);
+    });
+    var dots=Array.prototype.slice.call(dotsWrap.children);
+    var counter=document.getElementById('counter');
+    function go(n){
+      i=Math.max(0,Math.min(slides.length-1,n));
+      slides.forEach(function(s,idx){s.classList.toggle('active',idx===i);});
+      dots.forEach(function(d,idx){d.classList.toggle('on',idx===i);});
+      counter.textContent=(i+1)+' / '+slides.length;
+    }
+    document.getElementById('next').addEventListener('click',function(){go(i+1);});
+    document.getElementById('prev').addEventListener('click',function(){go(i-1);});
+    document.addEventListener('keydown',function(e){
+      if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(i+1);}
+      else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(i-1);}
+      else if(e.key==='Home'){go(0);} else if(e.key==='End'){go(slides.length-1);}
+    });
+  })();
+</script>

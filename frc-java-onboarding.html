@@ -1,0 +1,547 @@
+<title>FRC Java Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#F4F1EC; --surface:#FFFFFF; --surface-2:#FBF9F5; --line:#E2DCD2; --line-strong:#CFC7B9;
+    --ink:#1A1C20; --muted:#5C6069; --faint:#8A8E97;
+    --amber:#D9540B; --amber-soft:#F6E7D8; --amber-ink:#B5470C;
+    --teal:#0B7A7A; --teal-soft:#DDEEEC;
+    --shadow:0 1px 2px rgba(26,28,32,.04), 0 4px 16px rgba(26,28,32,.05);
+    --radius:10px;
+  }
+  :root:not([data-theme="light"]) { }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#131519; --surface:#1B1E23; --surface-2:#212429; --line:#2C3037; --line-strong:#3A3F47;
+      --ink:#E9E6E0; --muted:#A0A4AC; --faint:#767B84;
+      --amber:#F2762E; --amber-soft:#3A2413; --amber-ink:#F2762E;
+      --teal:#3DC7BE; --teal-soft:#12312F;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#131519; --surface:#1B1E23; --surface-2:#212429; --line:#2C3037; --line-strong:#3A3F47;
+    --ink:#E9E6E0; --muted:#A0A4AC; --faint:#767B84;
+    --amber:#F2762E; --amber-soft:#3A2413; --amber-ink:#F2762E;
+    --teal:#3DC7BE; --teal-soft:#12312F;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px 96px}
+
+  h1,h2,h3{font-family:"Archivo",ui-sans-serif,system-ui,sans-serif; text-wrap:balance; margin:0}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+  a{color:var(--teal); text-decoration:none; border-bottom:1px solid color-mix(in srgb, var(--teal) 35%, transparent)}
+  a:hover{border-bottom-color:var(--teal)}
+  :focus-visible{outline:2px solid var(--amber); outline-offset:2px; border-radius:3px}
+
+  /* ---- top bar ---- */
+  .topbar{position:sticky; top:0; z-index:20; background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(8px); border-bottom:1px solid var(--line)}
+  .topbar-in{max-width:920px; margin:0 auto; padding:11px 24px; display:flex; align-items:center; gap:14px}
+  .tb-mark{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:12px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--amber-ink)}
+  .tb-sep{flex:1}
+  .toggle{font:inherit; font-size:12px; font-family:"IBM Plex Mono",monospace; letter-spacing:.04em;
+    color:var(--muted); background:var(--surface); border:1px solid var(--line); border-radius:999px;
+    padding:5px 13px; cursor:pointer}
+  .toggle:hover{border-color:var(--line-strong); color:var(--ink)}
+
+  /* ---- hero ---- */
+  header.hero{padding:56px 0 40px}
+  .eyebrow{font-family:"IBM Plex Mono",monospace; font-size:12.5px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--amber-ink); font-weight:600; margin-bottom:18px}
+  header.hero h1{font-size:clamp(34px,6vw,52px); font-weight:800; line-height:1.02; letter-spacing:-.02em}
+  header.hero h1 .thin{font-weight:600; color:var(--muted)}
+  .lede{margin-top:20px; font-size:18px; color:var(--muted); max-width:60ch}
+  .lede b{color:var(--ink); font-weight:600}
+
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:26px}
+  .chip{font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.02em; padding:6px 12px;
+    border:1px solid var(--line-strong); border-radius:999px; color:var(--muted); background:var(--surface)}
+  .chip b{color:var(--ink); font-weight:600}
+
+  /* ---- section shell ---- */
+  section{margin-top:52px}
+  .sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:20px;
+    padding-bottom:12px; border-bottom:1px solid var(--line)}
+  .sec-head h2{font-size:15px; font-weight:700; letter-spacing:.02em}
+  .sec-head .num{font-family:"IBM Plex Mono",monospace; font-size:13px; color:var(--amber-ink); font-weight:600}
+  .sec-head .note{margin-left:auto; font-size:13px; color:var(--faint)}
+
+  /* ---- prose blocks ---- */
+  .prose p{margin:0 0 14px; max-width:66ch}
+  .prose strong{font-weight:600}
+
+  /* ---- phase banner ---- */
+  .phase{margin-top:44px; margin-bottom:8px}
+  .phase-tag{display:inline-flex; align-items:center; gap:9px; font-family:"IBM Plex Mono",monospace;
+    font-size:12px; letter-spacing:.14em; text-transform:uppercase; font-weight:600; color:var(--amber-ink)}
+  .phase-tag .dot{width:7px; height:7px; border-radius:50%; background:var(--amber)}
+  .phase h2{font-family:"Archivo",sans-serif; font-size:26px; font-weight:800; letter-spacing:-.01em; margin-top:8px}
+  .phase p{margin:8px 0 0; color:var(--muted); font-size:15px; max-width:64ch}
+
+  /* ---- week cards ---- */
+  .weeks{display:flex; flex-direction:column; gap:16px; margin-top:22px}
+  .week{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); overflow:hidden}
+  .week.milestone{border-color:color-mix(in srgb,var(--amber) 45%, var(--line))}
+  .week-top{display:flex; gap:16px; align-items:flex-start; padding:18px 20px 14px}
+  .wk-num{flex:none; width:52px}
+  .wk-num .k{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.12em; color:var(--faint); text-transform:uppercase}
+  .wk-num .n{font-family:"Archivo",sans-serif; font-size:30px; font-weight:800; line-height:1; color:var(--amber-ink); margin-top:2px}
+  .wk-head{flex:1; min-width:0}
+  .wk-title{font-family:"Archivo",sans-serif; font-size:19px; font-weight:700; letter-spacing:-.01em; line-height:1.2}
+  .wk-star{display:inline-block; font-size:12px; font-family:"IBM Plex Mono",monospace; color:var(--amber-ink);
+    background:var(--amber-soft); border-radius:6px; padding:2px 8px; margin-left:8px; vertical-align:middle;
+    letter-spacing:.06em; text-transform:uppercase; font-weight:600}
+  .wk-obj{margin-top:6px; color:var(--muted); font-size:14.5px}
+  .wk-obj b{color:var(--ink); font-weight:600}
+
+  .wk-body{border-top:1px solid var(--line); padding:6px 20px 18px}
+  .row{display:grid; grid-template-columns:96px 1fr; gap:14px; padding:11px 0; border-bottom:1px dotted var(--line)}
+  .row:last-child{border-bottom:none}
+  .row .lab{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--faint); padding-top:2px; font-weight:500}
+  .row .val{font-size:14.5px; color:var(--ink)}
+  .row .val code{font-family:"IBM Plex Mono",monospace; font-size:12.5px; background:var(--surface-2);
+    border:1px solid var(--line); padding:1px 5px; border-radius:5px; color:var(--teal)}
+  .row.stretch .lab{color:var(--teal)}
+  .row.deliver .val{font-weight:500}
+  .row.deliver .lab{color:var(--amber-ink)}
+
+  /* ---- generic table ---- */
+  .tbl-scroll{overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow)}
+  table{border-collapse:collapse; width:100%; min-width:560px; background:var(--surface); font-size:14px}
+  th,td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+  thead th{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--faint); font-weight:600; background:var(--surface-2)}
+  tbody tr:last-child td{border-bottom:none}
+  td b{font-weight:600}
+  td code{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--teal)}
+
+  /* ---- session template strip ---- */
+  .session{display:grid; grid-template-columns:repeat(4,1fr); gap:12px}
+  .slot{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:15px 15px 16px; box-shadow:var(--shadow)}
+  .slot .t{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--amber-ink); font-weight:600}
+  .slot .h{font-family:"Archivo",sans-serif; font-weight:700; font-size:15px; margin-top:7px}
+  .slot .d{font-size:13px; color:var(--muted); margin-top:5px}
+
+  /* ---- gates ---- */
+  .gates{display:flex; flex-direction:column; gap:10px}
+  .gate{display:flex; gap:14px; align-items:flex-start; background:var(--surface); border:1px solid var(--line);
+    border-left:3px solid var(--amber); border-radius:8px; padding:13px 16px; box-shadow:var(--shadow)}
+  .gate .g-wk{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--amber-ink); flex:none; width:110px; padding-top:1px}
+  .gate .g-txt{font-size:14.5px}
+
+  /* ---- callout ---- */
+  .callout{background:var(--amber-soft); border:1px solid color-mix(in srgb,var(--amber) 30%, transparent);
+    border-radius:var(--radius); padding:15px 18px; font-size:14.5px; margin-top:18px}
+  .callout .lab{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--amber-ink); font-weight:600; display:block; margin-bottom:5px}
+  .callout b{color:var(--ink)}
+
+  .risks{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  .risk{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:14px 16px; box-shadow:var(--shadow)}
+  .risk .r{font-family:"Archivo",sans-serif; font-weight:700; font-size:14.5px}
+  .risk .m{font-size:13.5px; color:var(--muted); margin-top:5px}
+  .risk .m b{color:var(--ink); font-weight:600}
+
+  .checklist{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:9px}
+  .checklist li{position:relative; padding-left:28px; font-size:14.5px}
+  .checklist li::before{content:""; position:absolute; left:0; top:4px; width:15px; height:15px; border-radius:4px;
+    border:1.5px solid var(--line-strong); background:var(--surface)}
+  .checklist li::after{content:""; position:absolute; left:5px; top:7px; width:4px; height:8px;
+    border-right:2px solid var(--amber); border-bottom:2px solid var(--amber); transform:rotate(42deg)}
+
+  footer{margin-top:60px; padding-top:22px; border-top:1px solid var(--line); color:var(--faint); font-size:13px}
+  footer b{color:var(--muted); font-weight:600}
+
+  @media (max-width:640px){
+    .session{grid-template-columns:1fr 1fr}
+    .risks{grid-template-columns:1fr}
+    .row{grid-template-columns:1fr; gap:3px}
+    .row .lab{padding-top:0}
+    .gate .g-wk{width:auto}
+    .gate{flex-direction:column; gap:4px}
+  }
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="tb-mark">FRC · Java · WPILib 2026</span>
+    <span class="tb-sep"></span>
+    <button class="toggle" id="themeBtn" aria-label="Toggle color theme">◐ Theme</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">12-Week Onboarding Program · Software</div>
+    <h1>From First Commit<br><span class="thin">to a Robot That Drives Itself</span></h1>
+    <p class="lede">A twelve-hour classroom thread that takes students new to FRC from <b>“what is this build system”</b> to contributing integrated, reviewed Java on a real swerve robot — teleop, autonomous, telemetry, and log-driven debugging. Sim-first so every student stays hands-on; the real robot is the reward.</p>
+    <div class="chips">
+      <span class="chip"><b>12</b> weeks</span>
+      <span class="chip"><b>1 hr</b> / week</span>
+      <span class="chip"><b>Java</b> only</span>
+      <span class="chip">WPILib <b>2026</b></span>
+      <span class="chip">Mixed experience</span>
+      <span class="chip">Sim + real <b>swerve</b></span>
+    </div>
+  </header>
+
+  <!-- PHILOSOPHY -->
+  <section id="philosophy">
+    <div class="sec-head"><span class="num">01</span><h2>How this plan is built</h2></div>
+    <div class="prose">
+      <p>The goal in twelve hours isn’t expertise — it’s <strong>fluency in the workflow</strong>: clone the repo, build, deploy or simulate, read the telemetry, find the problem in the data, fix it. Every Java concept is taught <em>because a subsystem needs it</em>, never in the abstract. Three constraints shape every week below.</p>
+    </div>
+    <div class="risks" style="margin-top:6px">
+      <div class="risk"><div class="r">One hour is short</div><div class="m">Each session is scoped tight with a fixed template and a short homework bridge. <b>Expect real depth to land in build-season lab time</b>; the 12 weeks are the backbone.</div></div>
+      <div class="risk"><div class="r">The group is mixed</div><div class="m">Every week has a <b>core path</b> everyone must reach and a <b>stretch path</b> for students who already know Java. Experienced↔new pairing is the default seating.</div></div>
+      <div class="risk"><div class="r">Sim first, robot as reward</div><div class="m">Build and validate in simulation; deploy to last year’s swerve bot at three milestones (Weeks <b>6, 11, 12</b>). Sim keeps 100% of students working even when the robot is busy.</div></div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="sec-head"><span class="num">02</span><h2>Software stack — installed once, Week 1</h2></div>
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th>Tool</th><th>Role</th><th>Note for 2026</th></tr></thead>
+        <tbody>
+          <tr><td><b>WPILib 2026 (VS Code)</b></td><td>Core libraries, IDE, build (GradleRIO)</td><td>2025 projects must be <em>imported</em> to be compatible.</td></tr>
+          <tr><td><b>Simulation GUI</b></td><td>Run/test code with no hardware</td><td>Primary lab environment, Weeks 1–5.</td></tr>
+          <tr><td><b>AdvantageScope 2026</b></td><td>Telemetry viewer & log analysis</td><td>The standard viewer. Shuffleboard/SmartDashboard are <b>deprecated</b> — not taught.</td></tr>
+          <tr><td><b>WPILib Epilogue</b></td><td>Annotation telemetry (<code>@Logged</code>)</td><td>Modern way to publish data; replaces hand-wired dashboard calls.</td></tr>
+          <tr><td><b>AdvantageKit 2026</b></td><td>Logging + deterministic replay</td><td>Week 10 — <b>basics scope</b>: logging + replay, not a full IO rewrite.</td></tr>
+          <tr><td><b>PathPlanner</b></td><td>Autonomous path creation</td><td>Week 11.</td></tr>
+          <tr><td><b>Vendordeps</b></td><td>CTRE Phoenix 6 and/or REVLib</td><td>Match last year’s swerve bot — decide in Week 5.</td></tr>
+          <tr><td><b>Git + GitHub</b></td><td>Version control & code review</td><td>Team repo in Week 1; PR workflow by Week 12.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <span class="lab">Mentor decision — before Week 5</span>
+      Confirm the swerve stack on last year’s bot: <b>CTRE TalonFX + Pigeon</b> vs. <b>REV Spark + NavX</b>, and which swerve library/template (an AdvantageKit swerve template or YAGSL). The whole drivetrain thread keys off this.
+    </div>
+  </section>
+
+  <!-- SESSION TEMPLATE -->
+  <section id="session">
+    <div class="sec-head"><span class="num">03</span><h2>The 60-minute session</h2><span class="note">every week produces a committed deliverable</span></div>
+    <div class="session">
+      <div class="slot"><div class="t">0:00–0:10</div><div class="h">Warm-up</div><div class="d">Recap, homework questions, state today’s one objective.</div></div>
+      <div class="slot"><div class="t">0:10–0:20</div><div class="h">Concept + demo</div><div class="d">Teach the new idea and demo it live on the projector.</div></div>
+      <div class="slot"><div class="t">0:20–0:55</div><div class="h">Hands-on lab</div><div class="d">Core path for all; stretch path for fast movers. Mentors float.</div></div>
+      <div class="slot"><div class="t">0:55–1:00</div><div class="h">Commit & wrap</div><div class="d">Commit to Git, name the deliverable, assign the homework bridge.</div></div>
+    </div>
+  </section>
+
+  <!-- WEEKS -->
+  <section id="weeks">
+    <div class="sec-head"><span class="num">04</span><h2>The twelve weeks</h2></div>
+
+    <!-- PHASE A -->
+    <div class="phase">
+      <span class="phase-tag"><span class="dot"></span>Phase A · Weeks 1–4</span>
+      <h2>Foundations</h2>
+      <p>Get everyone tooled up, comfortable in Java, and able to build a working subsystem in simulation.</p>
+    </div>
+    <div class="weeks">
+
+      <article class="week">
+        <div class="week-top">
+          <div class="wk-num"><div class="k">Week</div><div class="n">01</div></div>
+          <div class="wk-head">
+            <div class="wk-title">Environment, tooling & “Hello, Robot”</div>
+            <div class="wk-obj"><b>Objective:</b> everyone can create a project, build it, run it in simulation, and commit to Git.</div>
+          </div>
+        </div>
+        <div class="wk-body">
+          <div class="row"><div class="lab">Concepts</div><div class="val">Where FRC code runs (roboRIO, Driver Station); the WPILib VS Code environment; GradleRIO build; project anatomy (<code>Main.java</code>, <code>Robot.java</code>); the robot lifecycle; Git basics.</div></div>
+          <div class="row"><div class="lab">Core lab</div><div class="val">New project from a template → build → run in the Simulation GUI → print in <code>teleopPeriodic</code> → first commit.</div></div>
+          <div class="row stretch"><div class="lab">Stretch</div><div class="val">Set up the shared repo, write a <code>.gitignore</code>, branch, and open a first pull request.</div></div>
+          <div class="row deliver"><div class="lab">Deliverable</div><div class="val">Project builds & runs in sim on the student’s own laptop; first commit pushed.</div></div>
+          <div class="row"><div class="lab">Homework</div><div class="val">Confirm the WPILib 2026 install on your personal laptop; read “Zero to Robot.”</div></div>
+          <div class="row"><div class="lab">Mentor</div><div class="val">Pre-install on shared laptops; create the GitHub org/repo; keep a fallback laptop ready. Watch for version mismatch and un-imported 2025 projects.</div></div>
+        </div>
+      </article>
+
+      <article class="week">
+        <div class="week-top">
+          <div class="wk-num"><div class="k">Week</div><div class="n">02</div></div>
+          <div class="wk-head">
+            <div class="wk-title">Java for FRC, part 1 — values, methods, objects</div>
+            <div class="wk-obj"><b>Objective:</b> read and write basic Java grounded in real robot values.</div>
+          </div>
+        </div>
+        <div class="wk-body">
+          <div class="row"><div class="lab">Concepts</div><div class="val">Primitives (why robot values are usually <code>double</code>); variables; methods; classes vs. objects, <code>new</code>, fields; access modifiers; why mixing units bites you.</div></div>
+          <div class="row"><div class="lab">Core lab</div><div class="val">Write a small helper class (deadband, clamp, rotations→meters) and call it; read and print a joystick axis.</div></div>
+          <div class="row stretch"><div class="lab">Stretch</div><div class="val">Write a JUnit test for the math class; explore <code>record</code> and <code>enum</code>.</div></div>
+          <div class="row deliver"><div class="lab">Deliverable</div><div class="val">A committed, working helper class the student wrote.</div></div>
+          <div class="row"><div class="lab">Homework</div><div class="val">3–4 short Java exercises (handout).</div></div>
+        </div>
+      </article>
+
+      <article class="week">
+        <div class="week-top">
+          <div class="wk-num"><div class="k">Week</div><div class="n">03</div></div>
+          <div class="wk-head">
+            <div class="wk-title">Java for FRC, part 2 — control flow, enums, interfaces & lambdas</div>
+            <div class="wk-obj"><b>Objective:</b> control program flow and meet the OOP pieces command-based relies on.</div>
+          </div>
+        </div>
+        <div class="wk-body">
+          <div class="row"><div class="lab">Concepts</div><div class="val">Conditionals, boolean logic, loops; <code>enum</code> for robot states; inheritance & interfaces (why a subsystem extends a base class); <b>lambdas & method references</b>; <code>Supplier</code>/<code>Consumer</code>.</div></div>
+          <div class="row"><div class="lab">Core lab</div><div class="val">Model a 3-state machine (<code>IDLE</code>/<code>INTAKING</code>/<code>SCORING</code>) and switch states from simulated button presses.</div></div>
+          <div class="row stretch"><div class="lab">Stretch</div><div class="val">Refactor the logic behind an interface; use <code>DoubleSupplier</code> the way commands do.</div></div>
+          <div class="row deliver"><div class="lab">Deliverable</div><div class="val">A committed state-machine class driven by input.</div></div>
+          <div class="row"><div class="lab">Homework</div><div class="val">Implement one more state transition on your own.</div></div>
+        </div>
+      </article>
+
+      <article class="week">
+        <div class="week-top">
+          <div class="wk-num"><div class="k">Week</div><div class="n">04</div></div>
+          <div class="wk-head">
+            <div class="wk-title">The command-based framework</div>
+            <div class="wk-obj"><b>Objective:</b> understand subsystems, commands & the scheduler; build a controllable subsystem in sim.</div>
+          </div>
+        </div>
+        <div class="wk-body">
+          <div class="row"><div class="lab">Concepts</div><div class="val"><code>SubsystemBase</code>; <code>Command</code> & requirements; the scheduler (use <code>CommandScheduler.getInstance().schedule(...)</code> — <code>Command.schedule()</code> is deprecated in 2026); default commands; <code>RobotContainer</code> & <code>Trigger</code>/<code>CommandXboxController</code> bindings; inline commands & simple compositions.</div></div>
+          <div class="row"><div class="lab">Core lab</div><div class="val">Fill in a subsystem skeleton so a button spins it up and a default command holds it at rest; run in sim and watch the scheduler.</div></div>
+          <div class="row stretch"><div class="lab">Stretch</div><div class="val">Compose two commands into a sequence; add a <code>Trigger</code> that fires on a sensor condition.</div></div>
+          <div class="row deliver"><div class="lab">Gate ✓</div><div class="val">Student can independently create a subsystem + command and drive it in simulation.</div></div>
+        </div>
+      </article>
+    </div>
+
+    <!-- PHASE B -->
+    <div class="phase">
+      <span class="phase-tag"><span class="dot"></span>Phase B · Weeks 5–8</span>
+      <h2>Real robot programming</h2>
+      <p>Motors, the swerve drivetrain, sensors, closed-loop control, and proper telemetry — culminating in driving the real robot.</p>
+    </div>
+    <div class="weeks">
+
+      <article class="week">
+        <div class="week-top">
+          <div class="wk-num"><div class="k">Week</div><div class="n">05</div></div>
+          <div class="wk-head">
+            <div class="wk-title">Motors, vendordeps & the swerve drivetrain</div>
+            <div class="wk-obj"><b>Objective:</b> understand how motors are controlled and how a swerve drivetrain is structured.</div>
+          </div>
+        </div>
+        <div class="wk-body">
+          <div class="row"><div class="lab">Concepts</div><div class="val">Brushless motors & controllers (CTRE TalonFX/Phoenix 6, REV Spark/REVLib); installing <b>vendordeps</b>; the CAN bus; gear ratios & units; what swerve is (module = drive + steer + absolute encoder); kinematics at a high level.</div></div>
+          <div class="row"><div class="lab">Core lab</div><div class="val">Install the vendordeps; drive the <em>simulated</em> swerve bot with a controller; identify the four modules in code.</div></div>
+          <div class="row stretch"><div class="lab">Stretch</div><div class="val">Read one module’s code end-to-end; explain field-relative vs. robot-relative.</div></div>
+          <div class="row deliver"><div class="lab">Deliverable</div><div class="val">Simulated swerve driving under student control.</div></div>
+          <div class="row"><div class="lab">Mentor</div><div class="val">Lock the swerve stack decision and align the repo before this session.</div></div>
+        </div>
+      </article>
+
+      <article class="week milestone">
+        <div class="week-top">
+          <div class="wk-num"><div class="k">Week</div><div class="n">06</div></div>
+          <div class="wk-head">
+            <div class="wk-title">Driving the <em>real</em> robot<span class="wk-star">★ Milestone</span></div>
+            <div class="wk-obj"><b>Objective:</b> safely deploy to and drive last year’s swerve bot.</div>
+          </div>
+        </div>
+        <div class="wk-body">
+          <div class="row"><div class="lab">Concepts</div><div class="val"><code>CommandXboxController</code>; joystick scaling & deadbands; slew-rate limiting; field- vs. robot-relative teleop; <b>safety</b> (enable/disable, e-stop, brownout, space & spotters); the drive default command; deploying via Driver Station.</div></div>
+          <div class="row"><div class="lab">Core lab</div><div class="val">Deploy the team’s code to the real bot; drive field-relative; tune deadband and max speed. Rotate driver / spotter / observer roles.</div></div>
+          <div class="row stretch"><div class="lab">Stretch</div><div class="val">Implement slew-rate limiting and a “slow mode” speed scale.</div></div>
+          <div class="row deliver"><div class="lab">Deliverable</div><div class="val">The team drives the real robot under their own code — <b>major milestone.</b></div></div>
+          <div class="row"><div class="lab">Mentor</div><div class="val">Safety briefing, bumpers on, clear space, one spotter per run. Sim is the fallback for students away from the bot.</div></div>
+        </div>
+      </article>
+
+      <article class="week">
+        <div class="week-top">
+          <div class="wk-num"><div class="k">Week</div><div class="n">07</div></div>
+          <div class="wk-head">
+            <div class="wk-title">Sensors & feedback — encoders, gyro, closed-loop basics</div>
+            <div class="wk-obj"><b>Objective:</b> read sensors and make a mechanism go to a setpoint.</div>
+          </div>
+        </div>
+        <div class="wk-body">
+          <div class="row"><div class="lab">Concepts</div><div class="val">Encoders (position & velocity); gyro/IMU & heading; odometry (concept only); open vs. closed loop; PID starting with <b>P</b>; feedforward for velocity; setpoints.</div></div>
+          <div class="row"><div class="lab">Core lab</div><div class="val">Read and display encoder + gyro values; add P control to a test mechanism so it holds/reaches a setpoint.</div></div>
+          <div class="row stretch"><div class="lab">Stretch</div><div class="val">Add I and D and a simple feedforward; mention SysId as the proper way to find gains.</div></div>
+          <div class="row deliver"><div class="lab">Deliverable</div><div class="val">A mechanism that reaches a setpoint under closed-loop control.</div></div>
+          <div class="row"><div class="lab">Homework</div><div class="val">Predict what raising/lowering P will do; note it, then test next session.</div></div>
+        </div>
+      </article>
+
+      <article class="week">
+        <div class="week-top">
+          <div class="wk-num"><div class="k">Week</div><div class="n">08</div></div>
+          <div class="wk-head">
+            <div class="wk-title">Telemetry done right — Epilogue + AdvantageScope</div>
+            <div class="wk-obj"><b>Objective:</b> instrument the robot with modern telemetry and view it live.</div>
+          </div>
+        </div>
+        <div class="wk-body">
+          <div class="row"><div class="lab">Concepts</div><div class="val">NetworkTables (the pipe); <b>Epilogue</b> <code>@Logged</code> annotations (the modern 2026 way); why we skip Shuffleboard/SmartDashboard; connecting AdvantageScope to sim and the real robot; live graphs, tables, and the 2D/3D field.</div></div>
+          <div class="row"><div class="lab">Core lab</div><div class="val">Add <code>@Logged</code> to the drivetrain + one mechanism; open AdvantageScope; build and <b>save a layout</b> showing drive speed, a sensor value, and robot pose on the field.</div></div>
+          <div class="row stretch"><div class="lab">Stretch</div><div class="val">Log a custom struct/pose; add a 3D mechanism visualization.</div></div>
+          <div class="row deliver"><div class="lab">Gate ✓</div><div class="val">Student can add telemetry and read live data in AdvantageScope.</div></div>
+        </div>
+      </article>
+    </div>
+
+    <!-- PHASE C -->
+    <div class="phase">
+      <span class="phase-tag"><span class="dot"></span>Phase C · Weeks 9–12</span>
+      <h2>Telemetry-driven development & autonomy</h2>
+      <p>Analyze logs, add AdvantageKit logging + replay, program autonomous, and integrate everything into one working robot.</p>
+    </div>
+    <div class="weeks">
+
+      <article class="week">
+        <div class="week-top">
+          <div class="wk-num"><div class="k">Week</div><div class="n">09</div></div>
+          <div class="wk-head">
+            <div class="wk-title">AdvantageScope deep dive — logs, scrubbing & debugging</div>
+            <div class="wk-obj"><b>Objective:</b> use recorded logs to diagnose robot behavior after the fact.</div>
+          </div>
+        </div>
+        <div class="wk-body">
+          <div class="row"><div class="lab">Concepts</div><div class="val">On-robot logging (<code>DataLogManager</code>, <code>.wpilog</code>); downloading logs; timeline scrubbing; overlaying signals; spotting real problems (a module not tracking, current spikes, loop overruns); exporting.</div></div>
+          <div class="row"><div class="lab">Core lab</div><div class="val">Enable logging, generate a log by driving, download it, open it in AdvantageScope, and investigate a fault.</div></div>
+          <div class="row stretch"><div class="lab">Stretch</div><div class="val">Correlate multiple signals to explain a behavior; find a loop-overrun event.</div></div>
+          <div class="row deliver"><div class="lab">Deliverable</div><div class="val">A short written “log analysis” — what the data shows and why.</div></div>
+          <div class="row"><div class="lab">Homework</div><div class="val">Bring one question you’d want the logs to answer during a real match.</div></div>
+        </div>
+      </article>
+
+      <article class="week">
+        <div class="week-top">
+          <div class="wk-num"><div class="k">Week</div><div class="n">10</div></div>
+          <div class="wk-head">
+            <div class="wk-title">AdvantageKit — logging & deterministic replay</div>
+            <div class="wk-obj"><b>Objective:</b> understand what AdvantageKit adds and get logging + replay working. <em>(Basics — not a full IO rewrite.)</em></div>
+          </div>
+        </div>
+        <div class="wk-body">
+          <div class="row"><div class="lab">Concepts</div><div class="val">What AdvantageKit is and why (<b>deterministic replay</b>); the “logged robot” idea; inputs vs. outputs conceptually; the replay workflow — replay a real run offline and add <em>new</em> logged values retroactively. Set up via a template or existing-project integration.</div></div>
+          <div class="row"><div class="lab">Core lab</div><div class="val">On a copy of the project, enable AdvantageKit logging, record a run, then <b>replay</b> it offline and reproduce the robot’s state.</div></div>
+          <div class="row stretch"><div class="lab">Stretch</div><div class="val">Implement a minimal IO interface for one subsystem — a first taste of the full pattern (optional).</div></div>
+          <div class="row deliver"><div class="lab">Deliverable</div><div class="val">A successful replay of a logged run.</div></div>
+          <div class="row"><div class="lab">Mentor</div><div class="val">Keep ambition to logging + replay; the full IO architecture is a post-course topic.</div></div>
+        </div>
+      </article>
+
+      <article class="week milestone">
+        <div class="week-top">
+          <div class="wk-num"><div class="k">Week</div><div class="n">11</div></div>
+          <div class="wk-head">
+            <div class="wk-title">Autonomous — command groups, odometry & PathPlanner<span class="wk-star">★ Milestone</span></div>
+            <div class="wk-obj"><b>Objective:</b> make the robot act on its own.</div>
+          </div>
+        </div>
+        <div class="wk-body">
+          <div class="row"><div class="lab">Concepts</div><div class="val">The autonomous period; command groups for auto; odometry-based movement; <b>PathPlanner</b> (paths, autos, event markers); selecting an auto with <code>SendableChooser</code>.</div></div>
+          <div class="row"><div class="lab">Core lab</div><div class="val">Build a simple auto (drive + one action) as a command group; create a PathPlanner path; run it in sim, then on the <b>real</b> swerve bot; verify path vs. actual pose in AdvantageScope.</div></div>
+          <div class="row stretch"><div class="lab">Stretch</div><div class="val">Add event markers that trigger a mechanism mid-path; tune pose accuracy.</div></div>
+          <div class="row deliver"><div class="lab">Deliverable</div><div class="val">A working autonomous routine, validated in sim and on the real robot.</div></div>
+          <div class="row"><div class="lab">Mentor</div><div class="val">Field space + safety for real auto runs; a known-good starting pose.</div></div>
+        </div>
+      </article>
+
+      <article class="week milestone">
+        <div class="week-top">
+          <div class="wk-num"><div class="k">Week</div><div class="n">12</div></div>
+          <div class="wk-head">
+            <div class="wk-title">Capstone integration & showcase<span class="wk-star">★ Milestone</span></div>
+            <div class="wk-obj"><b>Objective:</b> combine teleop + auto + telemetry + logging into one working robot, and present it.</div>
+          </div>
+        </div>
+        <div class="wk-body">
+          <div class="row"><div class="lab">Concepts</div><div class="val">Integration; what “competition-ready” code looks like; the Git code-review / PR workflow; the season roadmap.</div></div>
+          <div class="row"><div class="lab">Core lab</div><div class="val">Complete a small integrated challenge on the real swerve bot — drive, run a scored auto, full telemetry + logging on; peer code review via pull requests.</div></div>
+          <div class="row stretch"><div class="lab">Stretch</div><div class="val">Experienced students lead the code review and own the PR merge.</div></div>
+          <div class="row deliver"><div class="lab">Gate ✓</div><div class="val">Capstone demo + team retrospective + a clean repo on <code>main</code>.</div></div>
+          <div class="row"><div class="lab">Beyond</div><div class="val">Roadmap: vision & AprilTags · the full AdvantageKit IO-layer pattern · SysId characterization · advanced auto & state-space control.</div></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- GATES -->
+  <section id="gates">
+    <div class="sec-head"><span class="num">05</span><h2>Assessment — four competency gates</h2><span class="note">working code, not quizzes</span></div>
+    <div class="gates">
+      <div class="gate"><div class="g-wk">End of Wk 4</div><div class="g-txt">Can independently build a subsystem + command and run it in simulation.</div></div>
+      <div class="gate"><div class="g-wk">End of Wk 6</div><div class="g-txt">Can safely deploy to and drive the real swerve robot.</div></div>
+      <div class="gate"><div class="g-wk">End of Wk 8</div><div class="g-txt">Can add telemetry and read live data in AdvantageScope.</div></div>
+      <div class="gate"><div class="g-wk">End of Wk 12</div><div class="g-txt">Can contribute integrated, reviewed code — teleop + auto + telemetry + logging.</div></div>
+    </div>
+  </section>
+
+  <!-- RISKS -->
+  <section id="risks">
+    <div class="sec-head"><span class="num">06</span><h2>Risks & contingencies</h2></div>
+    <div class="risks">
+      <div class="risk"><div class="r">60 minutes is tight</div><div class="m">Strict session template, provided skeleton code, homework bridges, and <b>optional open-lab time</b> in build season.</div></div>
+      <div class="risk"><div class="r">Real robot unavailable</div><div class="m">Every real-robot week has a <b>sim fallback</b> — no session is lost to a hardware fault or a busy mechanical team.</div></div>
+      <div class="risk"><div class="r">Mixed pace pulls apart</div><div class="m">The core/stretch split plus experienced↔new pairing keeps both ends engaged.</div></div>
+      <div class="risk"><div class="r">Swerve stack uncertainty</div><div class="m">Resolved by the Week-5 mentor decision; <b>align the repo before Week 5.</b></div></div>
+      <div class="risk"><div class="r">Install friction</div><div class="m">Pre-installed shared laptops as backup; Week-1 homework surfaces problems early.</div></div>
+      <div class="risk"><div class="r">Absences break continuity</div><div class="m">The repo is the source of truth; a student who misses a week pulls the reference branch and catches up.</div></div>
+    </div>
+  </section>
+
+  <!-- PREP -->
+  <section id="prep">
+    <div class="sec-head"><span class="num">07</span><h2>Prep before Week 1 — mentor checklist</h2></div>
+    <ul class="checklist">
+      <li>GitHub org + team repo with a working starter project and per-week reference branches.</li>
+      <li>WPILib 2026 pre-installed on shared laptops; install guide for personal laptops.</li>
+      <li>Last year’s swerve bot confirmed operational; swerve stack (CTRE/REV + template) documented.</li>
+      <li>Skeleton / fill-in-the-blank starter code for Weeks 2, 4, 7, and 10.</li>
+      <li>Java exercise handout for Weeks 2–3.</li>
+      <li>A planted-fault log for Week 9 and a reference integrated project for Week 12.</li>
+      <li>Driver Station / FRC Game Tools ready for the real-robot weeks.</li>
+    </ul>
+    <div class="callout">
+      <span class="lab">Open items for review</span>
+      Exact swerve library/template · whether to add a vision/AprilTag week by trimming elsewhere · how much build-season open-lab time supplements these 12 classroom hours.
+    </div>
+  </section>
+
+  <footer>
+    <b>FRC Java Onboarding · v1 draft for review.</b> Built for a mixed-experience group, sim + real swerve, WPILib 2026. Scoped to logging + replay for AdvantageKit. Meant to be reworked — dates, swerve stack, and the optional vision week are open.
+  </footer>
+</div>
+
+<script>
+  (function(){
+    var btn=document.getElementById('themeBtn');
+    var root=document.documentElement;
+    function current(){
+      var t=root.getAttribute('data-theme');
+      if(t) return t;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+    }
+    btn.addEventListener('click',function(){
+      var next=current()==='dark'?'light':'dark';
+      root.setAttribute('data-theme',next);
+    });
+  })();
+</script>
