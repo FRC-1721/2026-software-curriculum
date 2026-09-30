@@ -182,7 +182,22 @@
     <p class="sub wide">…and it <b>floods</b> the console — because <code class="mono">Periodic</code> runs 50 times a second. That’s the loop. Put one-time messages in <code class="mono">Init</code> instead.</p>
   </section>
 
-  <!-- 10 -->
+  <!-- 10 : How Git works -->
+  <section class="slide">
+    <div class="kicker">Before Step 6 — how Git works</div>
+    <h2 class="h2">Git = <span class="accent">save points</span> for your project</h2>
+<pre><span class="c">  working files          staging = "the box"        history</span>
+  Robot.java  ──<span class="k">add</span>──►   [ packed box ]  ──<span class="k">commit</span>──►  [ save point ]
+  Main.java                what goes in                sealed + labeled</pre>
+    <ul class="pts" style="margin-top:22px">
+      <li><span class="m">init</span><span><b>Start tracking</b> this folder <span class="d">— once per project</span></span></li>
+      <li><span class="m">add</span><span><b>Pack the box</b> <span class="d">— pick what goes in the next snapshot</span></span></li>
+      <li><span class="m">commit</span><span><b>Seal &amp; label it</b> <span class="d">— save to history with a message</span></span></li>
+    </ul>
+    <p class="sub wide">Saving a file (Ctrl+S) writes to disk. A <b>commit</b> is a separate, labeled snapshot you can always return to.</p>
+  </section>
+
+  <!-- 11 -->
   <section class="slide">
     <div class="kicker">Your turn — 35 minutes</div>
     <h2 class="h2">The lab, in <span class="accent">6 steps</span></h2>
@@ -226,7 +241,7 @@
   <div class="dots" id="dots"></div>
   <div class="nav">
     <button id="prev" aria-label="Previous slide">◀ Prev</button>
-    <span class="counter" id="counter">1 / 12</span>
+    <span class="counter" id="counter">1 / 13</span>
     <button id="next" aria-label="Next slide">Next ▶</button>
   </div>
 </div>

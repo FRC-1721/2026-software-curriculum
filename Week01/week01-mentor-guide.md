@@ -85,7 +85,7 @@ Keep this tight and *show*, don't lecture. Project your screen. Narrate every cl
 
 **Live demo (do it yourself, on the projector, ~5 min):**
 
-1. `WPILib: Create a new project` → **Template → java → Timed Robot** → pick a folder → project name `hello-robot` → team number (use your team's, or `9999` for demo) → **Generate**.
+1. `WPILib: Create a new project` → **Template → java → Timed Robot** → pick a folder → project name `hello-robot` → team number `1721` → **Generate**.
 2. Open `Robot.java`. Point out `teleopInit()` and `teleopPeriodic()`.
 3. Add one line to `teleopInit()`:
    ```java
@@ -96,6 +96,16 @@ Keep this tight and *show*, don't lecture. Project your screen. Narrate every cl
 6. **The teachable twist:** move the same `println` into `teleopPeriodic()`, re-simulate, enable Teleop, and let it *flood* the console. "See how it prints forever? That's the 50-times-a-second loop. Remember that — printing in `Periodic` is how you accidentally spam yourself." Move it back to `teleopInit`.
 
 > **Why this demo matters:** it plants the single most important mental model of the whole course — the periodic loop — in a way they *see*, not just hear.
+
+**Explaining Git (for the lab's Step 6 — box / snapshot analogy).** Students trip on Git more than on any code this week, so pre-teach it with one analogy: *Git takes labeled snapshots of your project — save points you can always return to* (like save points in a video game). There's a dedicated **"How Git works"** slide in the deck for this. First, kill the most common confusion: **saving a file (Ctrl+S) and committing to Git are different things** — Ctrl+S writes the file to disk right now; Git is a *separate history* of snapshots you choose to take and label. Then walk the three commands:
+
+- **`git init`** — *"start tracking this folder."* Run it **once, ever**, per project. It creates the hidden `.git` that stores every snapshot. Nothing is saved yet — like turning on a security camera that hasn't recorded anything.
+- **`git add .`** — *"pack the box."* Stage the changes you want in the next snapshot; the `.` means "everything that changed." This staging step is the part that confuses people — you're choosing what goes in the box *before* you tape it shut. Nothing is permanent yet.
+- **`git commit -m "Week 1: Hello, Robot"`** — *"seal and label the box."* Permanently records everything you staged, with the message describing what this save point is. That message is how you find it later.
+
+*(Then `git push` — Step 6's fourth command — uploads those commits to GitHub. `init`/`add`/`commit` all happen on the student's own laptop first.)*
+
+Gotchas to pre-empt: **"nothing to commit"** almost always means they forgot `git add .` (the box was empty) — a great moment to reinforce staging; the **`-m` message is required**, or Git opens an editor and beginners get stuck; and `init` is one-time. **Payoff move:** right after their first commit, have them run **`git log --oneline`** and *see* the snapshot sitting there with its message — that "it's actually saved" moment sells the whole concept better than any slide.
 
 ---
 
@@ -163,8 +173,11 @@ Students now do it themselves from the **student lab handout**. You and co-mento
 **"Do I have to use Git? It's confusing."**
 > Yes — it's how the team shares code and how you recover when something breaks. It feels clunky for a week, then it's second nature. Today just get one commit pushed.
 
+**"What's the difference between saving a file and committing?"**
+> Ctrl+S saves the file to disk right now. A commit is a separate, *labeled snapshot* of the whole project that you can always return to. You save files constantly; you commit at meaningful checkpoints.
+
 **"What team number do I put?"**
-> Use ours: `<your team #>`. For pure simulation it doesn't really matter, but set it correctly out of habit.
+> Use ours: `1721`. For pure simulation it doesn't really matter, but set it correctly out of habit.
 
 ---
 
