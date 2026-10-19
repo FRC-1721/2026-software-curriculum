@@ -1,0 +1,294 @@
+<title>Week 2 Teaching Pack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#F4F1EC; --surface:#FFFFFF; --surface-2:#FBF9F5; --line:#E2DCD2; --line-strong:#CFC7B9;
+    --ink:#1A1C20; --muted:#5C6069; --faint:#8A8E97;
+    --amber:#D9540B; --amber-soft:#F6E7D8; --amber-ink:#B5470C;
+    --teal:#0B7A7A; --teal-soft:#DDEEEC; --code-bg:#1C1F24; --code-ink:#E9E6E0;
+    --shadow:0 1px 2px rgba(26,28,32,.04), 0 4px 16px rgba(26,28,32,.05); --radius:10px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#131519; --surface:#1B1E23; --surface-2:#212429; --line:#2C3037; --line-strong:#3A3F47;
+      --ink:#E9E6E0; --muted:#A0A4AC; --faint:#767B84;
+      --amber:#F2762E; --amber-soft:#3A2413; --amber-ink:#F2762E; --teal:#3DC7BE; --teal-soft:#12312F;
+      --code-bg:#0F1114; --code-ink:#E9E6E0; --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#131519; --surface:#1B1E23; --surface-2:#212429; --line:#2C3037; --line-strong:#3A3F47;
+    --ink:#E9E6E0; --muted:#A0A4AC; --faint:#767B84;
+    --amber:#F2762E; --amber-soft:#3A2413; --amber-ink:#F2762E; --teal:#3DC7BE; --teal-soft:#12312F;
+    --code-bg:#0F1114; --code-ink:#E9E6E0; --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg); color:var(--ink); font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px; margin:0 auto; padding:0 24px 96px}
+  h1,h2,h3{font-family:"Archivo",ui-sans-serif,system-ui,sans-serif; text-wrap:balance; margin:0}
+  a{color:var(--teal)}
+  :focus-visible{outline:2px solid var(--amber); outline-offset:2px; border-radius:3px}
+  .topbar{position:sticky; top:0; z-index:30; background:color-mix(in srgb,var(--bg) 88%,transparent); backdrop-filter:blur(8px); border-bottom:1px solid var(--line)}
+  .topbar-in{max-width:900px; margin:0 auto; padding:11px 24px; display:flex; align-items:center; gap:14px}
+  .tb-mark{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--amber-ink)}
+  .tb-sep{flex:1}
+  .toggle{font:inherit; font-size:12px; font-family:"IBM Plex Mono",monospace; color:var(--muted); background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:5px 13px; cursor:pointer}
+  .toggle:hover{border-color:var(--line-strong); color:var(--ink)}
+  header.hero{padding:48px 0 26px}
+  .eyebrow{font-family:"IBM Plex Mono",monospace; font-size:12.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--amber-ink); font-weight:600; margin-bottom:16px}
+  header.hero h1{font-size:clamp(30px,5vw,44px); font-weight:800; line-height:1.05; letter-spacing:-.02em}
+  .goal{margin-top:16px; font-size:17px; color:var(--muted); max-width:62ch}
+  .goal b{color:var(--ink); font-weight:600}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:22px}
+  .chip{font-family:"IBM Plex Mono",monospace; font-size:12px; padding:6px 12px; border:1px solid var(--line-strong); border-radius:999px; color:var(--muted); background:var(--surface)}
+  .chip b{color:var(--ink); font-weight:600}
+  .tabs{position:sticky; top:45px; z-index:20; display:flex; gap:6px; padding:14px 0 12px; margin-bottom:8px; background:color-mix(in srgb,var(--bg) 92%,transparent); backdrop-filter:blur(6px); border-bottom:1px solid var(--line)}
+  .tab{font-family:"Archivo",sans-serif; font-weight:700; font-size:14px; color:var(--muted); background:transparent; border:1px solid transparent; border-radius:999px; padding:8px 18px; cursor:pointer}
+  .tab:hover{color:var(--ink)}
+  .tab[aria-selected="true"]{color:#fff; background:var(--amber); border-color:var(--amber)}
+  :root[data-theme="dark"] .tab[aria-selected="true"], :root:not([data-theme="light"]) .tab[aria-selected="true"]{color:#14161A}
+  .panel[hidden]{display:none}
+  section{margin-top:34px}
+  section:first-child{margin-top:20px}
+  .sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--line)}
+  .sec-head h2{font-size:15px; font-weight:700; letter-spacing:.02em}
+  .sec-head .num{font-family:"IBM Plex Mono",monospace; font-size:13px; color:var(--amber-ink); font-weight:600}
+  .sec-head .note{margin-left:auto; font-size:12.5px; color:var(--faint)}
+  p{max-width:68ch}
+  .lead-p{color:var(--muted)}
+  .checklist{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:9px}
+  .checklist li{position:relative; padding-left:28px; font-size:14.5px; max-width:70ch}
+  .checklist li::before{content:""; position:absolute; left:0; top:4px; width:15px; height:15px; border-radius:4px; border:1.5px solid var(--line-strong); background:var(--surface)}
+  .callout{background:var(--amber-soft); border:1px solid color-mix(in srgb,var(--amber) 30%,transparent); border-radius:var(--radius); padding:14px 17px; font-size:14.5px; margin-top:16px; max-width:74ch}
+  .callout .lab{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--amber-ink); font-weight:600; display:block; margin-bottom:5px}
+  .callout.teal{background:var(--teal-soft); border-color:color-mix(in srgb,var(--teal) 30%,transparent)}
+  .callout.teal .lab{color:var(--teal)}
+  .callout b{color:var(--ink)}
+  .timeline{display:flex; flex-direction:column; gap:14px; margin-top:6px}
+  .seg{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden}
+  .seg-head{display:flex; align-items:center; gap:14px; padding:14px 18px; border-bottom:1px solid var(--line); background:var(--surface-2)}
+  .seg-time{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:13px; color:var(--amber-ink); flex:none; width:96px}
+  .seg-title{font-family:"Archivo",sans-serif; font-weight:700; font-size:16px}
+  .seg-body{padding:14px 18px 18px}
+  .seg-body p{margin:0 0 10px}
+  .lbl{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); font-weight:600; margin:14px 0 6px}
+  ol.steps, ul.plain{margin:6px 0 0; padding-left:20px}
+  ol.steps li, ul.plain li{margin:5px 0; font-size:14.5px; max-width:70ch}
+  pre{background:var(--code-bg); color:var(--code-ink); border-radius:8px; padding:14px 16px; overflow-x:auto; font-family:"IBM Plex Mono",monospace; font-size:13px; line-height:1.55; margin:10px 0; border:1px solid rgba(255,255,255,.06)}
+  pre .c{color:#8A8E97} pre .k{color:#F2762E} pre .s{color:#3DC7BE}
+  code.inl{font-family:"IBM Plex Mono",monospace; font-size:12.5px; background:var(--surface-2); border:1px solid var(--line); padding:1px 6px; border-radius:5px; color:var(--teal)}
+  .qa{border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--surface); box-shadow:var(--shadow)}
+  .qa details{border-bottom:1px solid var(--line)}
+  .qa details:last-child{border-bottom:none}
+  .qa summary{cursor:pointer; padding:13px 18px; font-weight:600; font-size:14.5px; list-style:none; display:flex; gap:10px; align-items:flex-start}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary::before{content:"Q"; font-family:"IBM Plex Mono",monospace; color:var(--amber-ink); font-weight:600; flex:none}
+  .qa details[open] summary{background:var(--surface-2)}
+  .qa .ans{padding:0 18px 15px 40px; font-size:14.5px; color:var(--muted); max-width:72ch}
+  .qa .ans b{color:var(--ink)}
+  .tbl-scroll{overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); margin-top:6px}
+  table{border-collapse:collapse; width:100%; min-width:520px; background:var(--surface); font-size:14px}
+  th,td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+  thead th{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); font-weight:600; background:var(--surface-2)}
+  tbody tr:last-child td{border-bottom:none}
+  td b{font-weight:600}
+  td code, th code{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--teal)}
+  .step{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px 18px 18px; margin-top:14px}
+  .step-h{display:flex; align-items:baseline; gap:12px; margin-bottom:4px}
+  .step-n{font-family:"Archivo",sans-serif; font-weight:800; color:#fff; background:var(--amber); width:26px; height:26px; border-radius:7px; display:inline-flex; align-items:center; justify-content:center; flex:none; font-size:14px}
+  :root[data-theme="dark"] .step-n, :root:not([data-theme="light"]) .step-n{color:#14161A}
+  .step-title{font-family:"Archivo",sans-serif; font-weight:700; font-size:17px}
+  .step-time{margin-left:auto; font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--faint)}
+  .check{display:flex; gap:9px; align-items:flex-start; background:var(--teal-soft); border:1px solid color-mix(in srgb,var(--teal) 30%,transparent); border-radius:8px; padding:10px 13px; margin-top:12px; font-size:14px}
+  .check .ck{color:var(--teal); font-weight:700; flex:none}
+  .check b{color:var(--ink)}
+  .finish{background:var(--surface); border:2px solid var(--amber); border-radius:var(--radius); padding:18px 20px; margin-top:8px; box-shadow:var(--shadow)}
+  .finish h3{font-family:"Archivo",sans-serif; font-size:18px; margin-bottom:10px}
+  .finish .checklist li::before{border-color:var(--amber)}
+  footer{margin-top:52px; padding-top:20px; border-top:1px solid var(--line); color:var(--faint); font-size:13px}
+  footer b{color:var(--muted); font-weight:600}
+  @media (max-width:640px){.seg-head{flex-wrap:wrap; gap:6px} .seg-time{width:auto}}
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto; transition:none!important}}
+</style>
+
+<div class="topbar"><div class="topbar-in">
+  <span class="tb-mark">FRC 1721 · Week 02 · Teaching Pack</span>
+  <span class="tb-sep"></span>
+  <button class="toggle" id="themeBtn" aria-label="Toggle color theme">◐ Theme</button>
+</div></div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Week 2 of 12 · Foundations</div>
+    <h1>Java for FRC, part 1 — values, methods &amp; objects</h1>
+    <p class="goal"><b>Goal for the hour:</b> every student writes a small Java helper class (<code class="inl">RobotMath</code>), proves it works with a passing test, and calls it from robot code on a live joystick axis.</p>
+    <div class="chips">
+      <span class="chip"><b>60</b> min</span><span class="chip">Java on-ramp</span><span class="chip"><b>Sim</b> only</span><span class="chip">WPILib <b>2026</b></span><span class="chip">Deliverable: a green test</span>
+    </div>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tab-mentor" aria-selected="true" aria-controls="panel-mentor">Mentor Guide</button>
+    <button class="tab" role="tab" id="tab-student" aria-selected="false" aria-controls="panel-student">Student Lab</button>
+  </div>
+
+  <!-- MENTOR -->
+  <div class="panel" id="panel-mentor" role="tabpanel" aria-labelledby="tab-mentor">
+    <section>
+      <div class="sec-head"><span class="num">01</span><h2>Before class — prep</h2><span class="note">widest skill split of the course</span></div>
+      <ul class="checklist">
+        <li>Everyone's Week 1 project still builds &amp; simulates (sanity check as they arrive).</li>
+        <li><code class="inl">java-basics-week2</code> reference branch ready (with the Gradle wrapper) for clone-and-run.</li>
+        <li>Java exercise handout (3–4 problems) printed or linked for homework.</li>
+        <li>Projector at ~18–20pt; a terminal visible for <code class="inl">./gradlew test</code> output.</li>
+      </ul>
+      <div class="callout"><span class="lab">Most common friction</span>The test command. <code class="inl">./gradlew test</code> downloads dependencies on the first run and can take a minute; on Windows it's <code class="inl">gradlew test</code> (no <code class="inl">./</code>). Warn them so a slow first run doesn't read as “broken.”</div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="num">02</span><h2>Minute-by-minute</h2><span class="note">10 · 10 · 35 · 5</span></div>
+      <div class="timeline">
+        <div class="seg"><div class="seg-head"><span class="seg-time">0:00–0:10</span><span class="seg-title">Warm-up &amp; framing</span></div><div class="seg-body">
+          <ul class="plain"><li>Recap Week 1: “You proved the tools work. Today you write real Java.”</li><li>Frame the mixed room honestly: everyone leaves with a class that works and a test that proves it.</li><li>Deliverable: <em>a helper class you wrote, a green test, running on a joystick.</em></li></ul>
+        </div></div>
+        <div class="seg"><div class="seg-head"><span class="seg-time">0:10–0:20</span><span class="seg-title">Concept + live demo</span></div><div class="seg-body">
+          <p>Four ideas, each tied to a line of code:</p>
+          <ol class="steps">
+            <li><b>Values &amp; types</b> — robot values are almost always <code class="inl">double</code>.</li>
+            <li><b>Methods</b> — “a machine: inputs in, one value out.”</li>
+            <li><b>Classes &amp; objects</b> — a class groups methods; a utility class is all <code class="inl">static</code>, so no <code class="inl">new</code>. Say this explicitly — it confuses people.</li>
+            <li><b>Why test</b> — a test proves a method right once, forever.</li>
+          </ol>
+          <div class="lbl">Live demo (~5 min)</div>
+          <p>Walk <code class="inl">deadband</code>, run <code class="inl">./gradlew test</code> (green), then break an expected value, re-run to show it <b>fail</b>, and fix it.</p>
+<pre><span class="k">System</span>.out.println(RobotMath.deadband(<span class="s">0.55</span>, <span class="s">0.1</span>));  <span class="c">// 0.5</span></pre>
+          <div class="callout teal"><span class="lab">Why it matters</span>Establishes testing as normal in week two, before code gets scary.</div>
+        </div></div>
+        <div class="seg"><div class="seg-head"><span class="seg-time">0:20–0:55</span><span class="seg-title">Hands-on lab</span></div><div class="seg-body">
+          <div class="lbl">Core path</div>
+          <ul class="plain"><li>Open starter (<code class="inl">deadband</code> done as example) → implement <code class="inl">clamp</code> and <code class="inl">rotationsToMeters</code> → <code class="inl">./gradlew test</code> until green → simulate and watch raw vs. deadbanded stick values print.</li></ul>
+          <div class="lbl">Verify per pair</div>
+          <ul class="plain"><li>✅ tests pass · ✅ can explain <code class="inl">clamp</code> on an out-of-range input · ✅ deadband zeroes small stick values in sim.</li></ul>
+          <div class="lbl">Stretch</div>
+          <ul class="plain"><li>Write a fresh tested method (e.g. <code class="inl">feetToMeters</code>) · explore <code class="inl">record</code>/<code class="inl">enum</code> · explain “why no <code class="inl">new</code> for RobotMath.”</li></ul>
+          <div class="lbl">Floating priorities</div>
+          <ul class="plain"><li>(1) test-command issues · (2) read the <em>first</em> compiler error, not the last · (3) static-vs-instance confusion.</li></ul>
+        </div></div>
+        <div class="seg"><div class="seg-head"><span class="seg-time">0:55–1:00</span><span class="seg-title">Wrap &amp; homework</span></div><div class="seg-body">
+          <ul class="plain"><li>Confirm each student has a green test committed.</li><li>Recap: a method takes inputs and returns a value; a test proves it; <code class="inl">static</code> methods are called on the class.</li><li><b>Homework:</b> the Java exercise handout; optional — add one more tested method.</li></ul>
+        </div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="num">03</span><h2>Anticipated questions</h2></div>
+      <div class="qa">
+        <details><summary>Why <code class="inl">double</code> and not <code class="inl">int</code>?</summary><div class="ans">Robot values are rarely whole numbers — a stick at 0.42, a distance of 1.37 m. <code class="inl">double</code> holds decimals.</div></details>
+        <details><summary>Why not <code class="inl">new RobotMath()</code>?</summary><div class="ans">Every method is <code class="inl">static</code> — it belongs to the class, not an object. Call them by name: <code class="inl">RobotMath.clamp(...)</code>.</div></details>
+        <details><summary>My test fails but the code looks right.</summary><div class="ans">Read the failure — JUnit prints expected vs. actual. Usually a sign or order-of-operations slip. Print the inputs if unsure.</div></details>
+        <details><summary><code class="inl">./gradlew</code> isn't found.</summary><div class="ans">On Windows it's <code class="inl">gradlew test</code>. Make sure the terminal is in the project folder.</div></details>
+        <details><summary>How is this different from WPILib's deadband?</summary><div class="ans">Almost not at all — WPILib ships <code class="inl">MathUtil.applyDeadband</code>. We write our own to learn how it works.</div></details>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="num">04</span><h2>Differentiation &amp; contingencies</h2></div>
+      <div class="tbl-scroll"><table>
+        <thead><tr><th></th><th>New to programming</th><th>Knows Java already</th></tr></thead>
+        <tbody>
+          <tr><td><b>Focus</b></td><td>What a method/return/<code>double</code> is; call a method; read a test result.</td><td>Write new methods + tests; <code>record</code>/<code>enum</code>; edge cases (<code>low &gt; high</code>?).</td></tr>
+          <tr><td><b>Success</b></td><td><code>clamp</code> + <code>rotationsToMeters</code> pass.</td><td>A self-authored tested method; helped a peer.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout"><span class="lab">Contingencies</span><b>Gradle trouble:</b> fall back to a <code class="inl">main</code> with <code class="inl">println</code> checks; make <code class="inl">./gradlew test</code> homework. <b>The logic is the objective, not the tool.</b> · <b>Lost on syntax:</b> hand over the fill-in-the-blank version (signatures done, bodies <code class="inl">// TODO</code>).</div>
+    </section>
+  </div>
+
+  <!-- STUDENT -->
+  <div class="panel" id="panel-student" role="tabpanel" aria-labelledby="tab-student" hidden>
+    <section>
+      <p class="lead-p" style="font-size:16px">By the end of this hour you'll have a Java helper class you wrote, a passing test that proves it, and that helper running on a live joystick in the simulator.</p>
+      <div class="callout teal"><span class="lab">Three words this week</span><b>Value</b> = data, usually a <code class="inl">double</code>. · <b>Method</b> = a machine: inputs in, one value out. · <b>Test</b> = code that proves a method correct.</div>
+    </section>
+
+    <div class="step"><div class="step-h"><span class="step-n">0</span><span class="step-title">Get the starter</span><span class="step-time">3 min</span></div>
+      <p>Open the <code class="inl">java-basics-week2</code> pack. Find <code class="inl">util/RobotMath.java</code> (you work here) and <code class="inl">util/RobotMathTest.java</code> (the tests). Read <code class="inl">deadband(...)</code> — done for you.</p></div>
+
+    <div class="step"><div class="step-h"><span class="step-n">1</span><span class="step-title">Read a method</span><span class="step-time">4 min</span></div>
+<pre><span class="k">public static double</span> deadband(<span class="k">double</span> value, <span class="k">double</span> deadband) {
+  <span class="k">if</span> (Math.abs(value) &gt; deadband) {
+    <span class="k">if</span> (value &gt; <span class="s">0.0</span>) <span class="k">return</span> (value - deadband) / (<span class="s">1.0</span> - deadband);
+    <span class="k">else</span>              <span class="k">return</span> (value + deadband) / (<span class="s">1.0</span> - deadband);
+  }
+  <span class="k">return</span> <span class="s">0.0</span>;
+}</pre>
+      <div class="callout"><span class="lab">Why "static"</span><code class="inl">RobotMath</code> is a utility class — call methods on the name: <code class="inl">RobotMath.deadband(0.5, 0.1)</code>. Never <code class="inl">new RobotMath()</code>.</div></div>
+
+    <div class="step"><div class="step-h"><span class="step-n">2</span><span class="step-title">Write <code style="font-size:14px">clamp</code></span><span class="step-time">7 min</span></div>
+      <p>Keep a value inside a range: <code class="inl">clamp(5,0,1)→1</code>, <code class="inl">clamp(-5,0,1)→0</code>, <code class="inl">clamp(0.5,0,1)→0.5</code>.</p>
+      <div class="callout teal"><span class="lab">Hint</span><code class="inl">Math.min(a,b)</code> is the smaller, <code class="inl">Math.max(a,b)</code> the larger. Nest them.</div></div>
+
+    <div class="step"><div class="step-h"><span class="step-n">3</span><span class="step-title">Write <code style="font-size:14px">rotationsToMeters</code></span><span class="step-time">5 min</span></div>
+      <p>One rotation rolls a distance of <code class="inl">π × diameter</code>. So <code class="inl">rotationsToMeters(1.0, 0.1016)</code> ≈ <code class="inl">0.319</code> (a 4-inch wheel). Hint: <code class="inl">Math.PI</code>.</p></div>
+
+    <div class="step"><div class="step-h"><span class="step-n">4</span><span class="step-title">Run the tests</span><span class="step-time">4 min</span></div>
+<pre>./gradlew test        <span class="c"># Windows: gradlew test</span></pre>
+      <div class="check"><span class="ck">✅ Checkpoint 1</span><span>Ends with <code class="inl">BUILD SUCCESSFUL</code>, no failing tests. A failure shows <b>expected</b> vs <b>actual</b> — fix the math.</span></div></div>
+
+    <div class="step"><div class="step-h"><span class="step-n">5</span><span class="step-title">Use it on a joystick</span><span class="step-time">6 min</span></div>
+      <p><code class="inl">Robot.java</code> already reads the stick and applies your deadband:</p>
+<pre><span class="k">double</span> rawY = driver.getLeftY();
+<span class="k">double</span> commanded = RobotMath.deadband(rawY, <span class="s">0.1</span>);</pre>
+      <p>Simulate → <b>Teleoperated</b> → nudge the left-stick Y a little (raw moves, deadbanded stays 0), push it far (both move).</p>
+      <div class="check"><span class="ck">✅ Checkpoint 2</span><span>You can see the dead zone removing jitter near center.</span></div></div>
+
+    <div class="finish" style="margin-top:20px"><h3>🏁 You're done when…</h3>
+      <ul class="checklist"><li><code class="inl">./gradlew test</code> passes with your <code class="inl">clamp</code> + <code class="inl">rotationsToMeters</code>.</li><li>You can explain what <code class="inl">clamp</code> does in one sentence.</li><li>The joystick demo shows the dead zone working.</li></ul></div>
+
+    <section>
+      <div class="sec-head"><span class="num">★</span><h2>Stretch goals</h2></div>
+      <ol class="steps">
+        <li><b>New method + test.</b> Add <code class="inl">feetToMeters</code> (1 ft = 0.3048 m) and a test modeled on the others.</li>
+        <li><b>Edge cases.</b> What should <code class="inl">clamp(0.5, 1.0, 0.0)</code> (low &gt; high) do? Try it; discuss guarding against it.</li>
+        <li><b>Meet <code class="inl">record</code> / <code class="inl">enum</code></b> — a preview of Week 3.</li>
+        <li><b>Be a helper</b> — get a neighbor's tests to green.</li>
+      </ol>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="num">?</span><h2>Troubleshooting</h2></div>
+      <div class="tbl-scroll"><table>
+        <thead><tr><th>Problem</th><th>Try this</th></tr></thead>
+        <tbody>
+          <tr><td><code>./gradlew: not found</code></td><td>Windows: <code>gradlew test</code>. Be in the project folder.</td></tr>
+          <tr><td>First run hangs a while</td><td>Normal — it's downloading dependencies. Wait a minute.</td></tr>
+          <tr><td>A test fails</td><td>Read expected-vs-actual; check signs and parentheses.</td></tr>
+          <tr><td><code>cannot find symbol RobotMath</code></td><td>Check the <code>package</code> line; call <code>RobotMath.clamp(...)</code> on the class.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="num">HW</span><h2>Homework</h2></div>
+      <ol class="steps"><li>Complete the Java exercise handout.</li><li><em>(Optional)</em> add one more tested method and push a commit.</li></ol>
+    </section>
+  </div>
+
+  <footer><b>FRC 1721 · Week 2 Teaching Pack.</b> Java on-ramp, part 1. Pairs with the <code>java-basics-week2</code> starter (verified: compiles clean, tests pass) and the 12-week program.</footer>
+</div>
+
+<script>
+  (function(){
+    var root=document.documentElement;
+    document.getElementById('themeBtn').addEventListener('click',function(){
+      var cur=root.getAttribute('data-theme');
+      if(!cur) cur=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+      root.setAttribute('data-theme', cur==='dark'?'light':'dark');
+    });
+    var tabs=[['tab-mentor','panel-mentor'],['tab-student','panel-student']];
+    function select(id){tabs.forEach(function(t){var s=t[0]===id;document.getElementById(t[0]).setAttribute('aria-selected',s?'true':'false');document.getElementById(t[1]).hidden=!s;});window.scrollTo({top:0,behavior:'auto'});}
+    tabs.forEach(function(t){document.getElementById(t[0]).addEventListener('click',function(){select(t[0]);});});
+  })();
+</script>
