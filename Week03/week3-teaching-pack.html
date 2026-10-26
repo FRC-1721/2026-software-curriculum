@@ -1,0 +1,316 @@
+<title>Week 3 Teaching Pack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#F4F1EC; --surface:#FFFFFF; --surface-2:#FBF9F5; --line:#E2DCD2; --line-strong:#CFC7B9;
+    --ink:#1A1C20; --muted:#5C6069; --faint:#8A8E97;
+    --amber:#D9540B; --amber-soft:#F6E7D8; --amber-ink:#B5470C;
+    --teal:#0B7A7A; --teal-soft:#DDEEEC; --code-bg:#1C1F24; --code-ink:#E9E6E0;
+    --shadow:0 1px 2px rgba(26,28,32,.04), 0 4px 16px rgba(26,28,32,.05); --radius:10px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#131519; --surface:#1B1E23; --surface-2:#212429; --line:#2C3037; --line-strong:#3A3F47;
+      --ink:#E9E6E0; --muted:#A0A4AC; --faint:#767B84;
+      --amber:#F2762E; --amber-soft:#3A2413; --amber-ink:#F2762E; --teal:#3DC7BE; --teal-soft:#12312F;
+      --code-bg:#0F1114; --code-ink:#E9E6E0; --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#131519; --surface:#1B1E23; --surface-2:#212429; --line:#2C3037; --line-strong:#3A3F47;
+    --ink:#E9E6E0; --muted:#A0A4AC; --faint:#767B84;
+    --amber:#F2762E; --amber-soft:#3A2413; --amber-ink:#F2762E; --teal:#3DC7BE; --teal-soft:#12312F;
+    --code-bg:#0F1114; --code-ink:#E9E6E0; --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg); color:var(--ink); font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px; margin:0 auto; padding:0 24px 96px}
+  h1,h2,h3{font-family:"Archivo",ui-sans-serif,system-ui,sans-serif; text-wrap:balance; margin:0}
+  a{color:var(--teal)}
+  :focus-visible{outline:2px solid var(--amber); outline-offset:2px; border-radius:3px}
+  .topbar{position:sticky; top:0; z-index:30; background:color-mix(in srgb,var(--bg) 88%,transparent); backdrop-filter:blur(8px); border-bottom:1px solid var(--line)}
+  .topbar-in{max-width:900px; margin:0 auto; padding:11px 24px; display:flex; align-items:center; gap:14px}
+  .tb-mark{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--amber-ink)}
+  .tb-sep{flex:1}
+  .toggle{font:inherit; font-size:12px; font-family:"IBM Plex Mono",monospace; color:var(--muted); background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:5px 13px; cursor:pointer}
+  .toggle:hover{border-color:var(--line-strong); color:var(--ink)}
+  header.hero{padding:48px 0 26px}
+  .eyebrow{font-family:"IBM Plex Mono",monospace; font-size:12.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--amber-ink); font-weight:600; margin-bottom:16px}
+  header.hero h1{font-size:clamp(30px,5vw,44px); font-weight:800; line-height:1.05; letter-spacing:-.02em}
+  .goal{margin-top:16px; font-size:17px; color:var(--muted); max-width:62ch}
+  .goal b{color:var(--ink); font-weight:600}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:22px}
+  .chip{font-family:"IBM Plex Mono",monospace; font-size:12px; padding:6px 12px; border:1px solid var(--line-strong); border-radius:999px; color:var(--muted); background:var(--surface)}
+  .chip b{color:var(--ink); font-weight:600}
+  .tabs{position:sticky; top:45px; z-index:20; display:flex; gap:6px; padding:14px 0 12px; margin-bottom:8px; background:color-mix(in srgb,var(--bg) 92%,transparent); backdrop-filter:blur(6px); border-bottom:1px solid var(--line)}
+  .tab{font-family:"Archivo",sans-serif; font-weight:700; font-size:14px; color:var(--muted); background:transparent; border:1px solid transparent; border-radius:999px; padding:8px 18px; cursor:pointer}
+  .tab:hover{color:var(--ink)}
+  .tab[aria-selected="true"]{color:#fff; background:var(--amber); border-color:var(--amber)}
+  :root[data-theme="dark"] .tab[aria-selected="true"], :root:not([data-theme="light"]) .tab[aria-selected="true"]{color:#14161A}
+  .panel[hidden]{display:none}
+  section{margin-top:34px}
+  section:first-child{margin-top:20px}
+  .sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--line)}
+  .sec-head h2{font-size:15px; font-weight:700; letter-spacing:.02em}
+  .sec-head .num{font-family:"IBM Plex Mono",monospace; font-size:13px; color:var(--amber-ink); font-weight:600}
+  .sec-head .note{margin-left:auto; font-size:12.5px; color:var(--faint)}
+  p{max-width:68ch}
+  .lead-p{color:var(--muted)}
+  .checklist{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:9px}
+  .checklist li{position:relative; padding-left:28px; font-size:14.5px; max-width:70ch}
+  .checklist li::before{content:""; position:absolute; left:0; top:4px; width:15px; height:15px; border-radius:4px; border:1.5px solid var(--line-strong); background:var(--surface)}
+  .callout{background:var(--amber-soft); border:1px solid color-mix(in srgb,var(--amber) 30%,transparent); border-radius:var(--radius); padding:14px 17px; font-size:14.5px; margin-top:16px; max-width:74ch}
+  .callout .lab{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--amber-ink); font-weight:600; display:block; margin-bottom:5px}
+  .callout.teal{background:var(--teal-soft); border-color:color-mix(in srgb,var(--teal) 30%,transparent)}
+  .callout.teal .lab{color:var(--teal)}
+  .callout b{color:var(--ink)}
+  .diagram-box{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px; margin-top:6px; overflow-x:auto}
+  pre{background:var(--code-bg); color:var(--code-ink); border-radius:8px; padding:14px 16px; overflow-x:auto; font-family:"IBM Plex Mono",monospace; font-size:13px; line-height:1.55; margin:10px 0; border:1px solid rgba(255,255,255,.06)}
+  pre.diagram{background:var(--surface-2); color:var(--ink); border:1px dashed var(--line-strong)}
+  pre .c{color:#8A8E97} pre .k{color:#F2762E} pre .s{color:#3DC7BE}
+  code.inl{font-family:"IBM Plex Mono",monospace; font-size:12.5px; background:var(--surface-2); border:1px solid var(--line); padding:1px 6px; border-radius:5px; color:var(--teal)}
+  .timeline{display:flex; flex-direction:column; gap:14px; margin-top:6px}
+  .seg{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden}
+  .seg-head{display:flex; align-items:center; gap:14px; padding:14px 18px; border-bottom:1px solid var(--line); background:var(--surface-2)}
+  .seg-time{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:13px; color:var(--amber-ink); flex:none; width:96px}
+  .seg-title{font-family:"Archivo",sans-serif; font-weight:700; font-size:16px}
+  .seg-body{padding:14px 18px 18px}
+  .lbl{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); font-weight:600; margin:14px 0 6px}
+  ol.steps, ul.plain{margin:6px 0 0; padding-left:20px}
+  ol.steps li, ul.plain li{margin:5px 0; font-size:14.5px; max-width:70ch}
+  .qa{border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--surface); box-shadow:var(--shadow)}
+  .qa details{border-bottom:1px solid var(--line)}
+  .qa details:last-child{border-bottom:none}
+  .qa summary{cursor:pointer; padding:13px 18px; font-weight:600; font-size:14.5px; list-style:none; display:flex; gap:10px; align-items:flex-start}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary::before{content:"Q"; font-family:"IBM Plex Mono",monospace; color:var(--amber-ink); font-weight:600; flex:none}
+  .qa details[open] summary{background:var(--surface-2)}
+  .qa .ans{padding:0 18px 15px 40px; font-size:14.5px; color:var(--muted); max-width:72ch}
+  .qa .ans b{color:var(--ink)}
+  .tbl-scroll{overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); margin-top:6px}
+  table{border-collapse:collapse; width:100%; min-width:520px; background:var(--surface); font-size:14px}
+  th,td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+  thead th{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); font-weight:600; background:var(--surface-2)}
+  tbody tr:last-child td{border-bottom:none}
+  td b{font-weight:600} td code, th code{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--teal)}
+  .step{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px 18px 18px; margin-top:14px}
+  .step-h{display:flex; align-items:baseline; gap:12px; margin-bottom:4px}
+  .step-n{font-family:"Archivo",sans-serif; font-weight:800; color:#fff; background:var(--amber); width:26px; height:26px; border-radius:7px; display:inline-flex; align-items:center; justify-content:center; flex:none; font-size:14px}
+  :root[data-theme="dark"] .step-n, :root:not([data-theme="light"]) .step-n{color:#14161A}
+  .step-title{font-family:"Archivo",sans-serif; font-weight:700; font-size:17px}
+  .step-time{margin-left:auto; font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--faint)}
+  .check{display:flex; gap:9px; align-items:flex-start; background:var(--teal-soft); border:1px solid color-mix(in srgb,var(--teal) 30%,transparent); border-radius:8px; padding:10px 13px; margin-top:12px; font-size:14px}
+  .check .ck{color:var(--teal); font-weight:700; flex:none}
+  .check b{color:var(--ink)}
+  .finish{background:var(--surface); border:2px solid var(--amber); border-radius:var(--radius); padding:18px 20px; margin-top:8px; box-shadow:var(--shadow)}
+  .finish h3{font-family:"Archivo",sans-serif; font-size:18px; margin-bottom:10px}
+  .finish .checklist li::before{border-color:var(--amber)}
+  footer{margin-top:52px; padding-top:20px; border-top:1px solid var(--line); color:var(--faint); font-size:13px}
+  footer b{color:var(--muted); font-weight:600}
+  @media (max-width:640px){.seg-head{flex-wrap:wrap; gap:6px} .seg-time{width:auto}}
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto; transition:none!important}}
+</style>
+
+<div class="topbar"><div class="topbar-in">
+  <span class="tb-mark">FRC 1721 · Week 03 · Teaching Pack</span>
+  <span class="tb-sep"></span>
+  <button class="toggle" id="themeBtn" aria-label="Toggle color theme">◐ Theme</button>
+</div></div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Week 3 of 12 · Foundations</div>
+    <h1>Java for FRC, part 2 — control flow, enums &amp; lambdas</h1>
+    <p class="goal"><b>Goal for the hour:</b> every student builds a small state machine with an <code class="inl">enum</code> and a <code class="inl">switch</code>, proves the transitions with a passing test, and drives it from controller buttons via lambdas.</p>
+    <div class="chips">
+      <span class="chip"><b>60</b> min</span><span class="chip">Java on-ramp</span><span class="chip"><b>Sim</b> only</span><span class="chip">Sets up Week 4</span><span class="chip">Deliverable: a state machine</span>
+    </div>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tab-mentor" aria-selected="true" aria-controls="panel-mentor">Mentor Guide</button>
+    <button class="tab" role="tab" id="tab-student" aria-selected="false" aria-controls="panel-student">Student Lab</button>
+  </div>
+
+  <!-- MENTOR -->
+  <div class="panel" id="panel-mentor" role="tabpanel" aria-labelledby="tab-mentor">
+    <section>
+      <div class="sec-head"><span class="num">01</span><h2>Before class — prep</h2></div>
+      <ul class="checklist">
+        <li>Everyone finished Week 2 (a green <code class="inl">RobotMath</code> test). If not, a 2-minute fix as they settle.</li>
+        <li><code class="inl">java-basics-week3</code> reference branch ready (with the Gradle wrapper) for clone-and-run.</li>
+        <li>Draw the state diagram on the board <em>before</em> class — it does most of the teaching.</li>
+        <li>Button mapping for the demo: <b>A = intake, B = score, Y = stop</b> (matches the starter).</li>
+      </ul>
+      <div class="callout"><span class="lab">Most common friction</span>Confusing <code class="inl">==</code> (compare) with <code class="inl">=</code> (assign), and forgetting a <code class="inl">switch case</code> needs <code class="inl">break</code>. Call both out in the demo.</div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="num">02</span><h2>Draw this first — it does the teaching</h2></div>
+      <div class="diagram-box"><pre class="diagram">        intake (A)            score (B)
+  IDLE ─────────► INTAKING ─────────► SCORING
+   ▲                                    │
+   │        score (B) — "done scoring"  │
+   └────────────────────────────────────┘
+
+   STOP (Y) from ANY state ──► IDLE   (beats any other button)</pre></div>
+      <p class="lead-p" style="margin-top:14px">The whole lesson: turn this picture into an <code class="inl">enum</code> plus a <code class="inl">switch</code>.</p>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="num">03</span><h2>Minute-by-minute</h2><span class="note">10 · 10 · 35 · 5</span></div>
+      <div class="timeline">
+        <div class="seg"><div class="seg-head"><span class="seg-time">0:00–0:10</span><span class="seg-title">Warm-up &amp; framing</span></div><div class="seg-body">
+          <ul class="plain"><li>Recap Week 2: “You wrote and tested methods. Today those skills make decisions.”</li><li>Point at the diagram: a robot is usually in one of a few states and moves between them on input — that's a state machine.</li><li>Deliverable: <em>a working state machine, a green test, driven by buttons.</em></li></ul>
+        </div></div>
+        <div class="seg"><div class="seg-head"><span class="seg-time">0:10–0:20</span><span class="seg-title">Concept + live demo</span></div><div class="seg-body">
+          <ol class="steps">
+            <li><b>Control flow</b> — <code class="inl">if</code>/<code class="inl">else</code>, <code class="inl">boolean</code>. Warn: <code class="inl">==</code> compares, <code class="inl">=</code> assigns.</li>
+            <li><b><code class="inl">enum</code></b> — name the states so illegal ones can't be written.</li>
+            <li><b><code class="inl">switch</code></b> — branch per state; every case ends with <code class="inl">break</code>.</li>
+            <li><b>Lambdas</b> — <code class="inl">driver::getAButton</code> is a <code class="inl">BooleanSupplier</code>; foreshadow Week 4's bindings.</li>
+          </ol>
+          <div class="lbl">Live demo (~5 min)</div>
+          <p>Walk <code class="inl">RobotState</code> and the <code class="inl">switch</code>; run <code class="inl">./gradlew test</code> (green); break a transition (drop a <code class="inl">break</code> or change a target), re-run to show the test catch it, fix it.</p>
+          <div class="callout teal"><span class="lab">Why it matters</span>The failing test <b>localizes</b> the bug — “tests tell you exactly which rule you broke.”</div>
+        </div></div>
+        <div class="seg"><div class="seg-head"><span class="seg-time">0:20–0:55</span><span class="seg-title">Hands-on lab</span></div><div class="seg-body">
+          <div class="lbl">Core path</div>
+          <ul class="plain"><li>Complete <code class="inl">RobotState</code> → complete the <code class="inl">switch</code> in <code class="inl">update(...)</code> to match the diagram → <code class="inl">./gradlew test</code> until green → simulate and press A/B/Y to watch the state print.</li></ul>
+          <div class="lbl">Verify per pair</div>
+          <ul class="plain"><li>✅ tests pass · ✅ A from IDLE prints <code class="inl">-&gt; Intaking</code> · ✅ can explain why STOP is checked first.</li></ul>
+          <div class="lbl">Stretch</div>
+          <ul class="plain"><li>Add a fourth state + test · combined-button lambda · extract an <code class="inl">interface</code> and discuss why subsystems use them.</li></ul>
+          <div class="lbl">Floating priorities</div>
+          <ul class="plain"><li>(1) <code class="inl">==</code> vs <code class="inl">=</code> · (2) missing <code class="inl">break</code> / fall-through · (3) enum comparison <code class="inl">state == RobotState.IDLE</code> is correct.</li></ul>
+        </div></div>
+        <div class="seg"><div class="seg-head"><span class="seg-time">0:55–1:00</span><span class="seg-title">Wrap &amp; homework</span></div><div class="seg-body">
+          <ul class="plain"><li>Confirm transition tests are green and committed.</li><li>Recap: name states with an <code class="inl">enum</code>, branch with a <code class="inl">switch</code>, feed inputs as suppliers — the skeleton of every subsystem.</li><li><b>Homework:</b> add one more transition/state + a test; read ahead — next week these become Subsystems and Commands.</li></ul>
+        </div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="num">04</span><h2>Anticipated questions</h2></div>
+      <div class="qa">
+        <details><summary>Why an enum instead of numbers?</summary><div class="ans">Names read like English and the compiler blocks states that don't exist. <code class="inl">RobotState.SCORING</code> can't be mistyped as <code class="inl">3</code>.</div></details>
+        <details><summary>My state never changes.</summary><div class="ans">Usually <code class="inl">=</code> used where <code class="inl">==</code> was meant, or a <code class="inl">case</code> missing its <code class="inl">break</code> (fall-through). Check both.</div></details>
+        <details><summary>What's <code class="inl">driver::getAButton</code>?</summary><div class="ans">A method reference — shorthand for <code class="inl">() -&gt; driver.getAButton()</code>. It's a <code class="inl">BooleanSupplier</code> the machine calls each loop.</div></details>
+        <details><summary>Why check STOP before the switch?</summary><div class="ans">STOP should win from any state; handling it first keeps that rule in one place.</div></details>
+        <details><summary>Do real robots use this?</summary><div class="ans">Yes — subsystems track state this way, and Week 4's command framework is built on exactly these pieces.</div></details>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="num">05</span><h2>Differentiation &amp; contingencies</h2></div>
+      <div class="tbl-scroll"><table>
+        <thead><tr><th></th><th>New to programming</th><th>Knows Java already</th></tr></thead>
+        <tbody>
+          <tr><td><b>Focus</b></td><td><code>if</code>/<code>switch</code>/<code>enum</code> mechanics; make the diagram work.</td><td>New states, interfaces, combined-button lambdas, edge cases.</td></tr>
+          <tr><td><b>Success</b></td><td>Transition tests pass; buttons move state in sim.</td><td>An added state + test; can explain functional interfaces.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout"><span class="lab">Contingencies</span><b>Gradle trouble:</b> run a small <code class="inl">main</code> calling <code class="inl">update(...)</code> with hard-coded booleans. · <b>Stuck on the switch:</b> hand over the fill-in-the-blank version (cases present, bodies <code class="inl">// TODO</code>), one transition at a time, re-testing after each.</div>
+    </section>
+  </div>
+
+  <!-- STUDENT -->
+  <div class="panel" id="panel-student" role="tabpanel" aria-labelledby="tab-student" hidden>
+    <section>
+      <p class="lead-p" style="font-size:16px">By the end of this hour you'll have a working state machine built with an <code class="inl">enum</code> and a <code class="inl">switch</code>, a passing test for every transition, and the machine responding to controller buttons in the simulator.</p>
+      <div class="callout teal"><span class="lab">Words this week</span><b>enum</b> = a fixed set of named values. · <b>switch</b> = do something different per value. · <b>lambda</b> = a tiny function you can pass around.</div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="num">▶</span><h2>The machine you're building</h2></div>
+      <div class="diagram-box"><pre class="diagram">        intake (A)            score (B)
+  IDLE ─────────► INTAKING ─────────► SCORING
+   ▲                                    │
+   │          score (B) — done scoring  │
+   └────────────────────────────────────┘
+
+  STOP (Y) from ANY state ──► IDLE   (beats any other button)</pre></div>
+    </section>
+
+    <div class="step"><div class="step-h"><span class="step-n">1</span><span class="step-title">Name the states</span><span class="step-time">4 min</span></div>
+      <p>Open <code class="inl">RobotState.java</code> — an <code class="inl">enum</code>, a fixed list of names:</p>
+<pre><span class="k">public enum</span> RobotState {
+  IDLE(<span class="s">"Idle"</span>), INTAKING(<span class="s">"Intaking"</span>), SCORING(<span class="s">"Scoring"</span>);
+  <span class="c">// the label is a friendly name — enums can hold data!</span>
+}</pre>
+      <div class="callout"><span class="lab">Why an enum</span>The code says <code class="inl">RobotState.SCORING</code>, not a mystery number — and you can't mistype a state that doesn't exist.</div></div>
+
+    <div class="step"><div class="step-h"><span class="step-n">2</span><span class="step-title">Build the transitions</span><span class="step-time">10 min</span></div>
+      <p>In <code class="inl">Superstructure.java</code>, complete the <code class="inl">switch</code> to match the diagram:</p>
+<pre><span class="k">if</span> (stopButton) { state = RobotState.IDLE; <span class="k">return</span> state; }  <span class="c">// STOP wins</span>
+<span class="k">switch</span> (state) {
+  <span class="k">case</span> IDLE:     <span class="k">if</span> (intakeButton) state = RobotState.INTAKING; <span class="k">break</span>;
+  <span class="k">case</span> INTAKING: <span class="k">if</span> (scoreButton)  state = RobotState.SCORING;  <span class="k">break</span>;
+  <span class="k">case</span> SCORING:  <span class="k">if</span> (scoreButton)  state = RobotState.IDLE;     <span class="k">break</span>;
+  <span class="k">default</span>: <span class="k">break</span>;
+}</pre>
+      <div class="callout teal"><span class="lab">Two classic bugs</span><code class="inl">==</code> compares, <code class="inl">=</code> assigns — don't mix them. Every <code class="inl">case</code> needs a <code class="inl">break</code>, or it falls through.</div></div>
+
+    <div class="step"><div class="step-h"><span class="step-n">3</span><span class="step-title">Run the tests</span><span class="step-time">4 min</span></div>
+<pre>./gradlew test        <span class="c"># Windows: gradlew test</span></pre>
+      <div class="check"><span class="ck">✅ Checkpoint 1</span><span>All transition tests pass. A failure names the exact transition that's wrong — fix that one rule.</span></div></div>
+
+    <div class="step"><div class="step-h"><span class="step-n">4</span><span class="step-title">Drive it with buttons</span><span class="step-time">8 min</span></div>
+      <p><code class="inl">Robot.java</code> wires the buttons as <b>lambdas</b> — the same shape as Week 4's bindings:</p>
+<pre>superstructure.update(
+    driver::getAButton,   <span class="c">// A = intake</span>
+    driver::getBButton,   <span class="c">// B = score</span>
+    driver::getYButton);  <span class="c">// Y = stop</span></pre>
+      <p>Simulate → <b>Teleoperated</b> → press A → <code class="inl">-&gt; Intaking</code>, B → <code class="inl">-&gt; Scoring</code>, B again → <code class="inl">-&gt; Idle</code>, Y anytime → <code class="inl">-&gt; Idle</code>.</p>
+      <div class="check"><span class="ck">✅ Checkpoint 2</span><span>The printed state follows the diagram as you press buttons.</span></div></div>
+
+    <div class="finish" style="margin-top:20px"><h3>🏁 You're done when…</h3>
+      <ul class="checklist"><li><code class="inl">./gradlew test</code> passes.</li><li>A/B/Y walk the state through the diagram in the sim.</li><li>You can say why STOP is checked first.</li></ul></div>
+
+    <section>
+      <div class="sec-head"><span class="num">★</span><h2>Stretch goals</h2></div>
+      <ol class="steps">
+        <li><b>Add a state</b> — e.g. <code class="inl">EJECTING</code>, a transition to reach it, and a test.</li>
+        <li><b>Combine buttons</b> — a lambda like <code class="inl">() -&gt; driver.getBButton() &amp;&amp; driver.getXButton()</code>.</li>
+        <li><b>Make an interface</b> — extract <code class="inl">interface Updatable</code> and have <code class="inl">Superstructure</code> implement it.</li>
+        <li><b>Be a helper</b> — get a neighbor's transitions to green.</li>
+      </ol>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="num">?</span><h2>Troubleshooting</h2></div>
+      <div class="tbl-scroll"><table>
+        <thead><tr><th>Problem</th><th>Try this</th></tr></thead>
+        <tbody>
+          <tr><td>State never changes</td><td>Probably <code>=</code> where you meant <code>==</code>, or a <code>case</code> missing <code>break</code>.</td></tr>
+          <tr><td>Test fails on one transition</td><td>The message names it — fix just that <code>case</code>.</td></tr>
+          <tr><td><code>-&gt; Idle</code> prints constantly</td><td>Print only when <code>state != lastState</code> (the starter already does — check you didn't move the print).</td></tr>
+          <tr><td>Buttons do nothing in sim</td><td>Set <b>Teleoperated</b>; make sure a controller is mapped in the Joysticks panel.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="num">HW</span><h2>Homework</h2></div>
+      <ol class="steps"><li>Add one more transition (or state) <b>and a test for it</b>.</li><li>Read-ahead: next week these ideas become <b>Subsystems</b> and <b>Commands</b>.</li></ol>
+    </section>
+  </div>
+
+  <footer><b>FRC 1721 · Week 3 Teaching Pack.</b> Java on-ramp, part 2. Pairs with the <code>java-basics-week3</code> starter (verified: compiles clean, transitions tested) and the 12-week program.</footer>
+</div>
+
+<script>
+  (function(){
+    var root=document.documentElement;
+    document.getElementById('themeBtn').addEventListener('click',function(){
+      var cur=root.getAttribute('data-theme');
+      if(!cur) cur=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+      root.setAttribute('data-theme', cur==='dark'?'light':'dark');
+    });
+    var tabs=[['tab-mentor','panel-mentor'],['tab-student','panel-student']];
+    function select(id){tabs.forEach(function(t){var s=t[0]===id;document.getElementById(t[0]).setAttribute('aria-selected',s?'true':'false');document.getElementById(t[1]).hidden=!s;});window.scrollTo({top:0,behavior:'auto'});}
+    tabs.forEach(function(t){document.getElementById(t[0]).addEventListener('click',function(){select(t[0]);});});
+  })();
+</script>

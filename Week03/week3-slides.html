@@ -1,0 +1,167 @@
+<title>Week 3 Slides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#14161A; --panel:#1C2026; --panel-2:#232830; --line:#333A44;
+    --ink:#EEEBE4; --muted:#A2A8B2; --faint:#767D88;
+    --amber:#F2762E; --amber-soft:#3A2413; --teal:#3DC7BE; --teal-soft:#12312F; --code-bg:#0E1013; --code-ink:#EEEBE4;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif; overflow:hidden}
+  .deck{height:100vh; width:100%; position:relative}
+  .slide{position:absolute; inset:0; display:none; flex-direction:column; justify-content:center; padding:6vh 8vw; opacity:0; transition:opacity .25s ease}
+  .slide.active{display:flex; opacity:1}
+  @media (prefers-reduced-motion:reduce){.slide{transition:none}}
+  h1,h2{font-family:"Archivo",sans-serif; margin:0; text-wrap:balance; letter-spacing:-.02em; line-height:1.03}
+  .mono{font-family:"IBM Plex Mono",monospace}
+  .kicker{font-family:"IBM Plex Mono",monospace; font-size:clamp(12px,1.4vw,15px); letter-spacing:.2em; text-transform:uppercase; color:var(--amber); font-weight:600; margin-bottom:22px}
+  .big{font-size:clamp(32px,6vw,70px); font-weight:900}
+  .h2{font-size:clamp(26px,4.4vw,50px); font-weight:800}
+  .sub{font-size:clamp(16px,2.2vw,25px); color:var(--muted); margin-top:22px; max-width:32ch; line-height:1.45}
+  .sub b{color:var(--ink); font-weight:600}
+  .accent{color:var(--amber)} .teal{color:var(--teal)}
+  ul.pts{list-style:none; padding:0; margin:30px 0 0; display:flex; flex-direction:column; gap:15px}
+  ul.pts li{font-size:clamp(16px,2.3vw,25px); display:flex; gap:16px; align-items:flex-start; line-height:1.35; max-width:34ch}
+  ul.pts li .m{font-family:"IBM Plex Mono",monospace; color:var(--amber); font-weight:600; flex:none}
+  ul.pts li b{font-weight:600} ul.pts li span.d{color:var(--muted); font-weight:400}
+  pre{background:var(--code-bg); color:var(--code-ink); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:20px 24px; font-family:"IBM Plex Mono",monospace; font-size:clamp(13px,1.7vw,20px); line-height:1.55; margin:26px 0 0; overflow-x:auto; max-width:940px}
+  pre.diagram{background:var(--panel); border-style:dashed; border-color:var(--line-strong)}
+  pre .c{color:#767D88} pre .k{color:var(--amber)} pre .s{color:var(--teal)}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:clamp(18px,2.6vw,30px); margin-top:26px; max-width:820px}
+  .card .lab{font-family:"IBM Plex Mono",monospace; font-size:clamp(11px,1.3vw,14px); letter-spacing:.14em; text-transform:uppercase; color:var(--amber); font-weight:600; margin-bottom:12px}
+  .card p{margin:0; font-size:clamp(16px,2.1vw,24px); line-height:1.4} .card p + p{margin-top:12px}
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:30px; max-width:960px}
+  .two .box{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:clamp(16px,2.2vw,26px)}
+  .two .box.hot{border-color:var(--amber)}
+  .two .box .h{font-family:"Archivo",sans-serif; font-weight:800; font-size:clamp(16px,2.1vw,25px)}
+  .two .box .h .tag{font-family:"IBM Plex Mono",monospace; font-size:clamp(11px,1.3vw,15px); color:var(--amber); display:block; letter-spacing:.06em; margin-top:4px}
+  .two .box p{margin:12px 0 0; color:var(--muted); font-size:clamp(14px,1.6vw,18px); line-height:1.4}
+  .chrome{position:fixed; left:0; right:0; bottom:0; display:flex; align-items:center; gap:16px; padding:14px 22px; z-index:10}
+  .dots{display:flex; gap:7px; flex:1}
+  .dot{width:8px; height:8px; border-radius:50%; background:var(--line); border:none; padding:0; cursor:pointer}
+  .dot.on{background:var(--amber); transform:scale(1.25)}
+  .nav{display:flex; align-items:center; gap:8px}
+  .nav button{font:inherit; font-family:"IBM Plex Mono",monospace; font-size:13px; color:var(--muted); background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:7px 13px; cursor:pointer}
+  .nav button:hover{color:var(--ink); border-color:var(--amber)}
+  .counter{font-family:"IBM Plex Mono",monospace; font-size:13px; color:var(--faint); min-width:52px; text-align:center}
+  .brand{position:fixed; top:20px; right:26px; font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); z-index:10}
+  .hint{position:fixed; top:20px; left:26px; font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--faint); z-index:10}
+  kbd{font-family:"IBM Plex Mono",monospace; background:var(--panel-2); border:1px solid var(--line); border-radius:4px; padding:1px 6px; font-size:11px}
+  @media (max-width:640px){.two{grid-template-columns:1fr} .hint{display:none} ul.pts li{max-width:none}}
+</style>
+
+<div class="brand">FRC 1721 · Week 03</div>
+<div class="hint">◀ ▶ or <kbd>Space</kbd></div>
+
+<div class="deck" id="deck">
+  <section class="slide active">
+    <div class="kicker">Java for FRC · Week 3 of 12 · Foundations</div>
+    <h1 class="big">Control flow, enums<br>&amp; <span class="accent">lambdas</span></h1>
+    <p class="sub">You can write and test methods. Today they make <b>decisions</b> — a little state machine.</p>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Today's finish line</div>
+    <h2 class="h2">Build a <span class="accent">state machine</span></h2>
+    <div class="card"><div class="lab">Your deliverable</div>
+      <p>A machine that tracks what the robot is doing, a <b class="teal">passing test</b> for every transition, and it driven by controller buttons in the sim.</p></div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">The machine</div>
+    <h2 class="h2">Three states, a few rules</h2>
+<pre class="diagram">        intake (A)          score (B)
+  IDLE ───────► INTAKING ───────► SCORING
+   ▲                                 │
+   │       score (B) — done          │
+   └─────────────────────────────────┘
+  STOP (Y) from ANY state ──► IDLE</pre>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Idea 1 — enum</div>
+    <h2 class="h2">Name the states</h2>
+<pre><span class="k">public enum</span> RobotState { IDLE, INTAKING, SCORING; }</pre>
+    <p class="sub">Not <span class="mono">0/1/2</span> — real names. You literally can't use a state that doesn't exist.</p>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Idea 2 — switch</div>
+    <h2 class="h2">Branch per state</h2>
+<pre><span class="k">switch</span> (state) {
+  <span class="k">case</span> IDLE:     <span class="k">if</span> (intake) state = RobotState.INTAKING; <span class="k">break</span>;
+  <span class="k">case</span> INTAKING: <span class="k">if</span> (score)  state = RobotState.SCORING;  <span class="k">break</span>;
+  <span class="k">case</span> SCORING:  <span class="k">if</span> (score)  state = RobotState.IDLE;     <span class="k">break</span>;
+}</pre>
+    <p class="sub"><b>Two traps:</b> <span class="mono">==</span> compares, <span class="mono">=</span> assigns · every <span class="mono">case</span> needs <span class="mono">break</span>.</p>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Idea 3 — lambdas</div>
+    <h2 class="h2">A button is a <span class="accent">supplier</span></h2>
+<pre>superstructure.update(driver::getAButton, ...);</pre>
+    <p class="sub"><span class="mono">driver::getAButton</span> is a <span class="mono">BooleanSupplier</span> — a true/false the machine asks for each loop. <b>This is exactly how Week 4's button bindings work.</b></p>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Why we still test</div>
+    <h2 class="h2">A failing test <span class="accent">points at the bug</span></h2>
+<pre><span class="k">@Test</span> <span class="k">void</span> fullIntakeScoreCycle() {
+  assertEquals(RobotState.INTAKING, s.update(<span class="k">true</span>,<span class="k">false</span>,<span class="k">false</span>));
+  assertEquals(RobotState.SCORING,  s.update(<span class="k">false</span>,<span class="k">true</span>,<span class="k">false</span>));
+}</pre>
+    <p class="sub">Break one transition and the test names it. Run: <span class="mono">./gradlew test</span>.</p>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Your turn — 35 minutes</div>
+    <h2 class="h2">The lab</h2>
+    <ul class="pts">
+      <li><span class="m">1</span><span>Name the states in the <b>enum</b></span></li>
+      <li><span class="m">2</span><span>Complete the <b>switch</b> to match the diagram</span></li>
+      <li><span class="m">3</span><span>Run <span class="mono">./gradlew test</span> until <b class="teal">green</b></span></li>
+      <li><span class="m">4</span><span>Simulate → press <b>A / B / Y</b> → watch the state print</span></li>
+    </ul>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Finished early?</div>
+    <h2 class="h2">Stretch goals</h2>
+    <ul class="pts">
+      <li><span class="m">★</span><span>Add an <b>EJECTING</b> state + a test</span></li>
+      <li><span class="m">★</span><span>A combined-button lambda (two buttons to score)</span></li>
+      <li><span class="m">★</span><span>Extract an <span class="mono">interface</span> the machine implements</span></li>
+      <li><span class="m">★</span><span>Get a neighbor's transitions to green</span></li>
+    </ul>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Wrap</div>
+    <h2 class="h2">enum + switch + suppliers =<br><span class="teal">the skeleton of a subsystem</span></h2>
+    <div class="card"><div class="lab">Homework</div>
+      <p>1 · Add one more transition (or state) <b>and a test for it</b>.</p>
+      <p>2 · Read-ahead — next week these become <b>Subsystems &amp; Commands</b>.</p></div>
+    <p class="sub">Next week: <span class="accent">the command-based framework</span>.</p>
+  </section>
+</div>
+
+<div class="chrome">
+  <div class="dots" id="dots"></div>
+  <div class="nav"><button id="prev" aria-label="Previous slide">◀ Prev</button><span class="counter" id="counter">1 / 10</span><button id="next" aria-label="Next slide">Next ▶</button></div>
+</div>
+
+<script>
+  (function(){
+    var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+    var i=0, dotsWrap=document.getElementById('dots');
+    slides.forEach(function(s,idx){var d=document.createElement('button');d.className='dot'+(idx===0?' on':'');d.setAttribute('aria-label','Go to slide '+(idx+1));d.addEventListener('click',function(){go(idx);});dotsWrap.appendChild(d);});
+    var dots=Array.prototype.slice.call(dotsWrap.children), counter=document.getElementById('counter');
+    function go(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach(function(s,idx){s.classList.toggle('active',idx===i);});dots.forEach(function(d,idx){d.classList.toggle('on',idx===i);});counter.textContent=(i+1)+' / '+slides.length;}
+    document.getElementById('next').addEventListener('click',function(){go(i+1);});
+    document.getElementById('prev').addEventListener('click',function(){go(i-1);});
+    document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(i+1);}else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(i-1);}else if(e.key==='Home'){go(0);}else if(e.key==='End'){go(slides.length-1);}});
+  })();
+</script>
